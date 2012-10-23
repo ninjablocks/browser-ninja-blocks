@@ -2,12 +2,13 @@ Ninja Blocks Browser JS
 ===
 A browser javascript library to interact with the Ninja Blocks platform.
 
-## Usage
+## Instantiate the API
 ```javascript
 var ninja = new Ninja({
     user_access_token: ''
 });
 ```
+
 
 ## Create a Block
 ```javascript
@@ -15,6 +16,12 @@ var block = new ninja.Block({
     node_id: '123456789JAVASCRIPT'
 });
 block.Activate();
+```
+
+
+### Listen for Commands
+```javascript
+block.Listen();
 ```
 
 
@@ -32,6 +39,7 @@ var led = new ninja.Device({
 });
 block.RegisterDevice(led);
 ```
+
 
 ## Emit data from a Device
 ```javascript
