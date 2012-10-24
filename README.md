@@ -86,32 +86,32 @@ Once instantiated, the device must also be registered against a block
         <th>Required</th>
     </tr>
     <tr>
-        <td>_type_</td>
+        <td>type</td>
         <td>A value from the `Ninja.DeviceTypes` type definitions</td>
         <td>*</td>
     </tr>
     <tr>
-        <td>_type_id_</td>
+        <td>type_id</td>
         <td>A numeric value of the device (see Ninja Blocks Device Id list). </td>
         <td>*</td>
     </tr>
     <tr>
-        <td>_name_</td>
+        <td>name</td>
         <td>The name of the device.</td>
         <td>*</td>
     </tr>
     <tr>
-        <td>_vendor_</td>
+        <td>vendor</td>
         <td>The vendor id of the device. Default 0.</td>
         <td></td>
     </tr>
     <tr>
-        <td>_port_</td>
+        <td>port</td>
         <td>The port number of the device. Default 0.</td>
         <td></td>
     </tr>
     <tr>
-        <td>_onActuate_</td>
+        <td>onActuate</td>
         <td>function definition to execute when the device gets actuated</td>
         <td></td>
     </tr>
