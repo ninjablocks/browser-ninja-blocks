@@ -1,50 +1,13 @@
+"use strict";
 /**
- * Ninja API for use with the Browser
- */
-
-
-/**
- * Ninja Object.
- * Requires the user specify an access_token or user_access_token.
- * @param {[type]} options [description]
+ * Ninja API Javascript Library
+ * @name Ninja JS Library
+ * @version  0.1
+ * @description Ninja Blocks Javascript Library for use with the Ninja Cloud.
+ * @see https://github.com/ninjablocks/browser-ninja-blocks
+ * @author Jeremy Manoto (jeremy@ninjablocks.com)
  */
 var Ninja = function(options) {
-
-	/***********************************************************
-	 * TYPE DEFINITIONS
-	 ***********************************************************/
-
-
-	/**
-	 * Type definitions for the API
-	 * @type {Object}
-	 */
-	this.Types = {
-		// Authentication Modes
-		AUTH_MODES: {
-			USER_ACCESS_TOKEN: 1,
-			ACCESS_TOKEN: 2
-		},
-
-		// Device Types
-		DEVICE_TYPES: {
-			UNDEFINED:		'undefined',
-			BUTTON:			'button',
-			RGBLED:			'led',
-			TEMPERATURE:	'temperature',
-			HUMIDITY:		'humidity',
-			RF433:			'rf433',
-			MOTION:			'motion',
-			DISTANCE:		'distance',
-			WEBSERVICE:		'webservice',
-			ORIENTATION:	'orientation',
-			LOCATION:		'location',
-			ACCELERATION:	'acceleration',
-			PROXIMITY:		'proximity',
-			SOUND:			'sound',
-			WEBCAM:			'webcam'
-		}
-	};
 
 
 	/***********************************************************
@@ -59,7 +22,8 @@ var Ninja = function(options) {
 	this.Options = {
 		access_token:			undefined,
 		user_access_token:		undefined,
-		server:					''				// Server address (no trailing slash)
+		server:					'https://a.ninja.is',	// Server address (no trailing slash)
+		version:				0
 	};
 
 
@@ -72,7 +36,7 @@ var Ninja = function(options) {
 	 * [Authentication description]
 	 * @param {[type]} options [description]
 	 */
-	this.Authentication = function(options) {
+	var Authentication = function(options) {
 		var ninja = that;
 
 		/**
@@ -88,11 +52,20 @@ var Ninja = function(options) {
 			}
 		};
 
+		/**
+		 * Determines the current Authentication Mode.
+		 * Preference for ACCESS_TOKEN over USER_ACCESS_TOKEN
+		 */
+		this.GetMode = function() {
+			if (ninja.Options[Ninja.AuthenticationModes.ACCESS_TOKEN]) return Ninja.AuthenticationModes.ACCESS_TOKEN;
+			if (ninja.Options[Ninja.AuthenticationModes.USER_ACCESS_TOKEN]) return Ninja.AuthenticationModes.USER_ACCESS_TOKEN;
+			return null;
+		};
 	};
 
 
 	/***********************************************************
-	 * [User description]
+	 * User object definition (not publicly instantiable)
 	 * @param {[type]} options [description]
 	 ***********************************************************/
 	var UserAccount = function(options) {
@@ -105,12 +78,11 @@ var Ninja = function(options) {
 		this.Options = utilities.ObjectMerge(this.Options, options);
 
 		this.GetInfo = function(callback) {
-			var getUrl = ninja.Options.server + '/rest/v0/user' + authentication.getAuthSlug();
+			var getUrl = ninja.Options.server + '/rest/v' + ninja.Options.version + '/user' + ninja.Authentication.getAuthSlug();
 
 			var xhr = utilities.CreateXHR(function(response) {
 				if (callback)
 					callback(response);
-				console.log("UserAccount.GetInfo: ", response);
 			}, this);
 			xhr.open('GET', getUrl, true);
 			xhr.setRequestHeader('Content-Type', 'application/json');
@@ -124,12 +96,11 @@ var Ninja = function(options) {
 		 * Returns the 30 most recent entries in the authenticating user's activity stream.
 		 */
 		this.GetStream = function(callback) {
-			var getUrl = ninja.Options.server + '/rest/v0/user/stream' + authentication.getAuthSlug();
+			var getUrl = ninja.Options.server + '/rest/v' + ninja.Options.version + '/user/stream' + ninja.Authentication.getAuthSlug();
 
 			var xhr = utilities.CreateXHR(function(response) {
 				if (callback)
 					callback(response);
-				console.log("UserAccount.GetStream: ", response);
 			}, this);
 			xhr.open('GET', getUrl, true);
 			xhr.setRequestHeader('Content-Type', 'application/json');
@@ -142,13 +113,12 @@ var Ninja = function(options) {
 		 * @param {Function} callback Callback function
 		 */
 		this.GetPusherChannel = function(callback) {
-			var getUrl = ninja.Options.server + '/rest/v0/user/pusherchannel' + authentication.getAuthSlug();
+			var getUrl = ninja.Options.server + '/rest/v' + ninja.Options.version + '/user/pusherchannel' + ninja.Authentication.getAuthSlug();
 
-			xhr = utilities.CreateXHR(function(response) {
+			var xhr = utilities.CreateXHR(function(response) {
 				if (response.result) {
 					if (callback)
 						callback(response);
-					console.log("UserAccount.GetPusherChannel: ", response);
 				}
 			});
 			xhr.open('GET', getUrl, true);
@@ -159,7 +129,7 @@ var Ninja = function(options) {
 
 	/***********************************************************
 	 * Ninja Block object definition
-	 * @param {[type]} options [description]
+	 * @param {object} options Configuration objects for the Block
 	 ***********************************************************/
 	this.Block = function(options) {
 		var ninja = that;
@@ -187,7 +157,7 @@ var Ninja = function(options) {
 		 */
 		this.Claim = function(callback) {
 			var postData = { nodeid: this.Options.node_id };
-			var postUrl = ninja.Options.server + '/rest/v0/block' + authentication.getAuthSlug();
+			var postUrl = ninja.Options.server + '/rest/v' + ninja.Options.version + '/block' + ninja.Authentication.getAuthSlug();
 
 			var xhr = utilities.CreateXHR(function(response) {
 				if (response.result) {
@@ -206,7 +176,7 @@ var Ninja = function(options) {
 		 */
 		this.Activate = function(callback) {
 			var postData = { nodeid: this.Options.node_id };
-			var postUrl = ninja.Options.server + '/rest/v0/block/' + this.Options.node_id + '/activate' + authentication.getAuthSlug();
+			var postUrl = ninja.Options.server + '/rest/v' + ninja.Options.version + '/block/' + this.Options.node_id + '/activate' + ninja.Authentication.getAuthSlug();
 
 			var activateListener;
 
@@ -215,16 +185,16 @@ var Ninja = function(options) {
 			}, this);
 			activateXHR.open('GET', postUrl, true);
 			activateXHR.setRequestHeader('Content-Type', 'application/json');
-			activateXHR.addEventListener('error', resumeActivate.bind(this), false);
+			//activateXHR.addEventListener('error', resumeActivate.bind(this), false);
 			activateXHR.send();
 
 
-			function resumeActivate() {
+			var resumeActivate = function() {
 				activateXHR = undefined;
 				clearInterval(activateListener);
 
 				this.Activate();
-			}
+			};
 
 			function parseActivate() {
 
@@ -250,18 +220,22 @@ var Ninja = function(options) {
 		/**
 		 * Listen for Ninja Commands
 		 */
-		this.Listen = function() {
-			var commandsUrl = ninja.Options.server + '/rest/v0/block/' + this.Options.node_id + '/commands' + authentication.getAuthSlug();
+		this.Listen = function(interval) {
+
+			// Environment Checks
+			if (ninja.Options.token === undefined) return false;
+
+			var commandsUrl = ninja.Options.server + '/rest/v' + ninja.Options.version + '/block/' + this.Options.node_id + '/commands' + ninja.Authentication.getAuthSlug();
 			
 			// Error handler if the listener disconnects unexpectedly
-			function errorHandler(event) {
+			var errorHandler = function(event) {
 				//console.log('XHR Error: ', event);
 				listenerXHR = undefined;
 				clearInterval(listener);
 
 				// Resume listening
 				this.Listen();
-			}
+			};
 
 
 			// XHR Initiation
@@ -278,7 +252,7 @@ var Ninja = function(options) {
 					var last_index = 0;
 
 					// XHR Function definitions
-					function parseCommands() {
+					var parseCommands = function() {
 						if (listenerXHR.readyState == 3) {
 							var curr_index = listenerXHR.responseText.length;
 							if (last_index == curr_index && last_index !== 0) {
@@ -293,7 +267,7 @@ var Ninja = function(options) {
 							for(var i=0; i<commands.length; i++) {
 								var command = commands[i];
 								if (command !== '') {
-									commandObject = JSON.parse(command);
+									var commandObject = JSON.parse(command);
 
 									// TODO: Send it off the devices
 									this.BroadcastCommand(commandObject);
@@ -302,11 +276,12 @@ var Ninja = function(options) {
 						} else {
 							// console.log('Not Listening');
 						}
-					}
+					};
 
 
 					// Check for new content every 10th of a seconds
-					listener = setInterval(parseCommands.bind(this), this.Options.listenInterval);
+					var intervalLength = (interval) ? interval : this.Options.listenInterval;
+					listener = setInterval(parseCommands.bind(this), intervalLength);
 				} catch (xhr_error) {
 					return false;
 				}
@@ -429,7 +404,6 @@ var Ninja = function(options) {
 
 			return device;
 		};
-
 	};
 
 	/***********************************************************
@@ -437,7 +411,7 @@ var Ninja = function(options) {
 	 * @param {[type]} options [description]
 	 ***********************************************************/
 	this.Device = function(options) {
-		this.ninja = that;
+		var ninja = that;
 
 		var utilities = new ninja.Utilities();
 
@@ -458,9 +432,9 @@ var Ninja = function(options) {
 		 * @param {string/number} data Value to actuate the Ninja Blocks cloud with.
 		 *
 		 */
-		this.Emit = function(data) {
+		this.Emit = function(data, callback) {
 
-			var url = ninja.Options.server + '/rest/v0/block/' + this.GUID() + '/data' + authentication.getAuthSlug();
+			var url = ninja.Options.server + '/rest/v' + ninja.Options.version + '/block/' + this.Options.block.Options.node_id + '/data' + ninja.Authentication.getAuthSlug();
 			data = {
 				GUID: this.GUID(),
 				G: this.Options.port,
@@ -470,7 +444,7 @@ var Ninja = function(options) {
 			};
 
 			var xhr = utilities.CreateXHR(function(response) {
-				console.log(response);
+				if (callback) callback(response);
 			}, this);
 			xhr.open('POST', url, true);
 			xhr.setRequestHeader('Content-Type', 'application/json');
@@ -482,13 +456,13 @@ var Ninja = function(options) {
 
 
 		this.Options = {
-			type: ninja.Types.DEVICE_TYPES.UNDEFINED,
+			type: Ninja.DeviceTypes.UNDEFINED,
 			type_id: 0,
 			vendor: 0,
 			port: 0,
 			block: undefined,
 			value: undefined,
-			onActuate: function() { console.log(this.GUID() + ".onActuate() not implemented."); }
+			onActuate: function() { throw(".onActuate() not implemented."); }
 		};
 
 		this.Options = utilities.ObjectMerge(this.Options, options);
@@ -510,6 +484,7 @@ var Ninja = function(options) {
 
 	/***********************************************************
 	 * Utilities methods and functions.
+	 * Used throughout the API.
 	 ***********************************************************/
 	this.Utilities = function() {
 		this.ninja = that;
@@ -525,7 +500,7 @@ var Ninja = function(options) {
 			for (var p in obj2) {
 				try {
 					if ( obj2[p].constructor==Object )
-						{ obj1[p] = MergeRecursive(obj1[p], obj2[p]); }
+						{ obj1[p] = this.ObjectMerge(obj1[p], obj2[p]); }
 					else
 						{ obj1[p] = obj2[p]; }
 				} catch(e) { obj1[p] = obj2[p];	}
@@ -552,7 +527,6 @@ var Ninja = function(options) {
 					xhr = new ActiveXObject('Microsoft.XMLHTTP');
 				}
 				catch(e) {
-					alert(e.message);
 					xhr = null;
 				}
 			}
@@ -588,7 +562,6 @@ var Ninja = function(options) {
 		} else {
 			throw new Error('No XML parser found');
 		}
-
 	};
 
 	/***********************************************************
@@ -602,7 +575,8 @@ var Ninja = function(options) {
 	// interrogate the passed in Ninja options
 	
 	var utilities = new this.Utilities();
-	var authentication = new this.Authentication();
+	this.Authentication = new Authentication();
+
 
 	// merge the options
 	this.Options = utilities.ObjectMerge(this.Options, options);
@@ -612,53 +586,31 @@ var Ninja = function(options) {
 
 };
 
+/***********************************************************
+ * Static Types
+ ***********************************************************/
+// Authentication Modes
+Ninja.AuthenticationModes = {
+	USER_ACCESS_TOKEN:	'user_access_token',
+	ACCESS_TOKEN:		'access_token'
+};
 
-
-/**
- * EXAMPLE USAGE
- * ====================
- *
- * Assumes authentication has already happened. Developer/User should pass in
- * their predetermined authentication token.
- */
-
-
-// Instantiate a new Ninja
-var ninja = new Ninja({
-	server: 'http://localhost:3000',
-	user_access_token: ''
-});
-
-
-// Create a Block
-var block1 = new ninja.Block({ node_id: '123456789ABCJS' });
-block1.Activate();
-
-
-// Create a Device
-var button = new ninja.Device({
-	type: ninja.Types.DEVICE_TYPES.BUTTON,
-	type_id: 5,
-	name: 'My JS Device',
-	vendor: 0,
-	port: 0
-});
-
-block1.RegisterDevice(button);
-
-
-var led = new ninja.Device({
-	type: ninja.Types.RGBLED,
-	type_id: 1000,
-	name: 'My LED',
-	vendor: 0,
-	port: 0,
-	onActuate: function(data) {
-		console.log("LED Actuated: ", data);
-		console.log("LED Actuate this: ", this);
-
-	}
-});
-
-block1.RegisterDevice(led);
+// Device Types
+Ninja.DeviceTypes = {
+	UNDEFINED:		'undefined',
+	BUTTON:			'button',
+	RGBLED:			'led',
+	TEMPERATURE:	'temperature',
+	HUMIDITY:		'humidity',
+	RF433:			'rf433',
+	MOTION:			'motion',
+	DISTANCE:		'distance',
+	WEBSERVICE:		'webservice',
+	ORIENTATION:	'orientation',
+	LOCATION:		'location',
+	ACCELERATION:	'acceleration',
+	PROXIMITY:		'proximity',
+	SOUND:			'sound',
+	WEBCAM:			'webcam'
+};
 
