@@ -79,14 +79,43 @@ block.IsListening() //returns true|false;
 Devices can be created by instantiating a new `ninja.Device()` object and setting a few required options.  
 Once instantiated, the device must also be registered against a block
 
-|Option Value | Description | Required |
-|-------------|-------------|
-|_type_       | A value from the `Ninja.DeviceTypes` type definitions. | * |
-|_type_id_    | A numeric value of the device (see Ninja Blocks Device Id list). | * |
-|_name_       | The name of the device. | *
-|_vendor_     | The vendor id of the device. Default 0. |  |
-|_port_       | The port number of the device. Default 0. |  |
-|_onActuate_  | `function` definition to execute when the device gets actuated. |  |
+<table>
+    <tr>
+        <th>Option</th>
+        <th>Description</th>
+        <th>Required</th>
+    </tr>
+    <tr>
+        <td>_type_</td>
+        <td>A value from the `Ninja.DeviceTypes` type definitions</td>
+        <td>*</td>
+    </tr>
+    <tr>
+        <td>_type_id_</td>
+        <td>A numeric value of the device (see Ninja Blocks Device Id list). </td>
+        <td>*</td>
+    </tr>
+    <tr>
+        <td>_name_</td>
+        <td>The name of the device.</td>
+        <td>*</td>
+    </tr>
+    <tr>
+        <td>_vendor_</td>
+        <td>The vendor id of the device. Default 0.</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>_port_</td>
+        <td>The port number of the device. Default 0.</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>_onActuate_</td>
+        <td>function definition to execute when the device gets actuated</td>
+        <td></td>
+    </tr>
+</table>
 
 
 ```javascript
@@ -156,5 +185,3 @@ Ninja.DeviceTypes.TEMPERATURE;
 Ninja.DeviceTypes.WEBCAM;
 Ninja.DeviceTypes.WEBSERVICE;
 ```
-
-
