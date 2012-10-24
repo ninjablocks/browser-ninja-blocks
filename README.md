@@ -133,7 +133,7 @@ block.RegisterDevice(led);
 ```
 
 ### Actuating a Device
-To respond to actuations to the device from the Ninja Cloud set the `onActuate` function definition. The function should take a single argument which will represent the the data value to respond with.
+To respond to actuations to the device from the Ninja Cloud set the `onActuate` function definition. Which can be set in the options object passed in during instantiation. The function should take a single argument which will represent the the data value to respond with.
 
 ```javascript
 led.Options.onActuate = function(data) {
