@@ -197,6 +197,10 @@ var Ninja = function(options) {
 		};
 
 
+		/**
+		 * Sends a heartbeat to the Ninja Cloud
+		 * @param {Function} callback [description]
+		 */
 		this.HeartBeat = function(callback) {
 
 		};
