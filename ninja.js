@@ -1,4 +1,5 @@
 "use strict";
+
 /**
  * Ninja API Javascript Library
  * @name Ninja JS Library
@@ -28,15 +29,9 @@ var Ninja = function(options) {
 
 
 	/***********************************************************
-	 * Functions
+	 * Authentication module.
 	 ***********************************************************/
-
-
-	/**
-	 * [Authentication description]
-	 * @param {[type]} options [description]
-	 */
-	var Authentication = function(options) {
+	var Authentication = function() {
 		var ninja = that;
 
 		/**
@@ -63,24 +58,22 @@ var Ninja = function(options) {
 		};
 	};
 
-
 	/***********************************************************
 	 * User object definition (not publicly instantiable)
-	 * @param {[type]} options [description]
+	 * @param {object} options Configuration options
 	 ***********************************************************/
 	var UserAccount = function(options) {
 		var ninja = that;
-		var utilities = new ninja.Utilities();
 
 		this.Options = {
 
 		},
-		this.Options = utilities.ObjectMerge(this.Options, options);
+		this.Options = Ninja.Utilities.ObjectMerge(this.Options, options);
 
 		this.GetInfo = function(callback) {
 			var getUrl = ninja.Options.server + '/rest/v' + ninja.Options.version + '/user' + ninja.Authentication.getAuthSlug();
 
-			var xhr = utilities.CreateXHR(function(response) {
+			var xhr = Ninja.Utilities.CreateXHR(function(response) {
 				if (callback)
 					callback(response);
 			}, this);
@@ -98,7 +91,7 @@ var Ninja = function(options) {
 		this.GetStream = function(callback) {
 			var getUrl = ninja.Options.server + '/rest/v' + ninja.Options.version + '/user/stream' + ninja.Authentication.getAuthSlug();
 
-			var xhr = utilities.CreateXHR(function(response) {
+			var xhr = Ninja.Utilities.CreateXHR(function(response) {
 				if (callback)
 					callback(response);
 			}, this);
@@ -115,7 +108,7 @@ var Ninja = function(options) {
 		this.GetPusherChannel = function(callback) {
 			var getUrl = ninja.Options.server + '/rest/v' + ninja.Options.version + '/user/pusherchannel' + ninja.Authentication.getAuthSlug();
 
-			var xhr = utilities.CreateXHR(function(response) {
+			var xhr = Ninja.Utilities.CreateXHR(function(response) {
 				if (response.result) {
 					if (callback)
 						callback(response);
@@ -133,7 +126,6 @@ var Ninja = function(options) {
 	 ***********************************************************/
 	this.Block = function(options) {
 		var ninja = that;
-		var utilities = new ninja.Utilities();
 		var listener;
 		var listenerXHR;
 
@@ -150,7 +142,7 @@ var Ninja = function(options) {
 			listenInterval: 300
 		};
 
-		this.Options = utilities.ObjectMerge(this.Options, options);
+		this.Options = Ninja.Utilities.ObjectMerge(this.Options, options);
 
 		/**
 		 * Initiates a Claim on the block
@@ -159,7 +151,7 @@ var Ninja = function(options) {
 			var postData = { nodeid: this.Options.node_id };
 			var postUrl = ninja.Options.server + '/rest/v' + ninja.Options.version + '/block' + ninja.Authentication.getAuthSlug();
 
-			var xhr = utilities.CreateXHR(function(response) {
+			var xhr = Ninja.Utilities.CreateXHR(function(response) {
 				if (response.result) {
 					if (callback)
 						callback(response.result);
@@ -180,7 +172,7 @@ var Ninja = function(options) {
 
 			var activateListener;
 
-			var activateXHR = utilities.CreateXHR(function(response) {
+			var activateXHR = Ninja.Utilities.CreateXHR(function(response) {
 				this.Options.token = response.token;
 			}, this);
 			activateXHR.open('GET', postUrl, true);
@@ -223,7 +215,7 @@ var Ninja = function(options) {
 		this.Listen = function(interval) {
 
 			// Environment Checks
-			if (ninja.Options.token === undefined) return false;
+			if (this.Options.token === undefined) return false;
 
 			var commandsUrl = ninja.Options.server + '/rest/v' + ninja.Options.version + '/block/' + this.Options.node_id + '/commands' + ninja.Authentication.getAuthSlug();
 			
@@ -242,7 +234,7 @@ var Ninja = function(options) {
 			if (!listenerXHR) {
 
 				try {
-					listenerXHR = new XMLHttpRequest();
+					listenerXHR = Ninja.Utilities.CreateXHR();
 					listenerXHR.open('GET', commandsUrl, true);
 					listenerXHR.setRequestHeader('X-Ninja-Token', this.Options.token);
 					listenerXHR.addEventListener('error', errorHandler.bind(this), false); // need to bind() to rescope the callback so that it knows how to re-call Listen()
@@ -407,13 +399,11 @@ var Ninja = function(options) {
 	};
 
 	/***********************************************************
-	 * [Device description]
-	 * @param {[type]} options [description]
+	 * Ninja Device Object Definition
+	 * @param {object} options Configuration Options
 	 ***********************************************************/
 	this.Device = function(options) {
 		var ninja = that;
-
-		var utilities = new ninja.Utilities();
 
 
 		/**
@@ -443,7 +433,7 @@ var Ninja = function(options) {
 				DA: data
 			};
 
-			var xhr = utilities.CreateXHR(function(response) {
+			var xhr = Ninja.Utilities.CreateXHR(function(response) {
 				if (callback) callback(response);
 			}, this);
 			xhr.open('POST', url, true);
@@ -465,7 +455,7 @@ var Ninja = function(options) {
 			onActuate: function() { throw(".onActuate() not implemented."); }
 		};
 
-		this.Options = utilities.ObjectMerge(this.Options, options);
+		this.Options = Ninja.Utilities.ObjectMerge(this.Options, options);
 
 
 		this.Actuate = this.Options.onActuate;
@@ -482,104 +472,19 @@ var Ninja = function(options) {
 		};
 	};
 
-	/***********************************************************
-	 * Utilities methods and functions.
-	 * Used throughout the API.
-	 ***********************************************************/
-	this.Utilities = function() {
-		this.ninja = that;
-
-		/**
-		 * Merges two objects together recursively
-		 * @param {object} obj1 primary object to merge into
-		 * @param {object} obj2 secondary object to copy values into obj1
-		 *
-		 * @author Markus (http://stackoverflow.com/questions/171251/how-can-i-merge-properties-of-two-javascript-objects-dynamically)
-		 */
-		this.ObjectMerge = function(obj1, obj2) {
-			for (var p in obj2) {
-				try {
-					if ( obj2[p].constructor==Object )
-						{ obj1[p] = this.ObjectMerge(obj1[p], obj2[p]); }
-					else
-						{ obj1[p] = obj2[p]; }
-				} catch(e) { obj1[p] = obj2[p];	}
-			}
-			return obj1;
-		};
 
 
-		/**
-		 * Creates an XHR object to handle requests.
-		 * If callback specified it will be called with the specified scope (optional as well)
-		 * @param  {function} callback      (optional) Callback function called with a JSON object of the response
-		 * @param  {object}   callbackScope (optional) Scope of the callback function
-		 * @return {object}                 XHR object
-		 *
-		 * @author Ryan Kinal (http://stackoverflow.com/questions/3470895/small-ajax-javascript-library)
-		 * @author Jeremy Manoto
-		 */
-		this.CreateXHR = function(callback, callbackScope)
-		{
-			var xhr;
-			if (window.ActiveXObject) {
-				try {
-					xhr = new ActiveXObject('Microsoft.XMLHTTP');
-				}
-				catch(e) {
-					xhr = null;
-				}
-			}
-			else { xhr = new XMLHttpRequest(); }
-
-			xhr.onreadystatechange = function(event) {
-				if (xhr.readyState === 4) {
-					if (callback && callbackScope) callback.call(callbackScope, JSON.parse(xhr.responseText));
-					else if (callback) callback(JSON.parse(xhr.responseText));
-				}
-			};
-
-			return xhr;
-		};
-
-
-		/**
-		 * Cross Browser XML Parser
-		 * @author Tim Down (http://stackoverflow.com/questions/7949752/cross-browser-javascript-xml-parsing)
-		 */
-		if (typeof window.DOMParser != 'undefined') {
-			this.ParseXml = function(xmlStr) {
-				return ( new window.DOMParser() ).parseFromString(xmlStr, 'text/xml');
-			};
-		} else if (typeof window.ActiveXObject != 'undefined' &&
-				new window.ActiveXObject('Microsoft.XMLDOM')) {
-			this.ParseXml = function(xmlStr) {
-				var xmlDoc = new window.ActiveXObject('Microsoft.XMLDOM');
-				xmlDoc.async = 'false';
-				xmlDoc.loadXML(xmlStr);
-				return xmlDoc;
-			};
-		} else {
-			throw new Error('No XML parser found');
-		}
-	};
-
-	/***********************************************************
-	 * Utilities methods and functions.
-	 ***********************************************************/
 
 	// ----------------------------------
 	// Custom Initialization starts here
 	// ----------------------------------
 
-	// interrogate the passed in Ninja options
-	
-	var utilities = new this.Utilities();
+	// instantiate the utilities
 	this.Authentication = new Authentication();
 
 
 	// merge the options
-	this.Options = utilities.ObjectMerge(this.Options, options);
+	this.Options = Ninja.Utilities.ObjectMerge(this.Options, options);
 
 	// Load the user
 	this.User = new UserAccount();
@@ -613,4 +518,125 @@ Ninja.DeviceTypes = {
 	SOUND:			'sound',
 	WEBCAM:			'webcam'
 };
+
+/***********************************************************
+ * Utilities methods and functions.
+ * Used throughout the API.
+ ***********************************************************/
+Ninja.Utilities = {
+
+	/**
+	 * Merges two objects together recursively
+	 * @param {object} obj1 primary object to merge into
+	 * @param {object} obj2 secondary object to copy values into obj1
+	 *
+	 * @author Markus (http://stackoverflow.com/questions/171251/how-can-i-merge-properties-of-two-javascript-objects-dynamically)
+	 */
+	ObjectMerge: function(obj1, obj2) {
+		for (var p in obj2) {
+			try {
+				if ( obj2[p].constructor==Object )
+					{ obj1[p] = this.ObjectMerge(obj1[p], obj2[p]); }
+				else
+					{ obj1[p] = obj2[p]; }
+			} catch(e) { obj1[p] = obj2[p];	}
+		}
+		return obj1;
+	},
+
+	/**
+	 * Creates an XHR object to handle requests.
+	 * If callback specified it will be called with the specified scope (optional as well)
+	 * @param  {function} callback      (optional) Callback function called with a JSON object of the response
+	 * @param  {object}   callbackScope (optional) Scope of the callback function
+	 * @return {object}                 XHR object
+	 *
+	 * @author Ryan Kinal (http://stackoverflow.com/questions/3470895/small-ajax-javascript-library)
+	 * @author Jeremy Manoto
+	 */
+	CreateXHR: function(callback, callbackScope)
+	{
+		var xhr;
+		if (window.ActiveXObject) {
+			try {
+				xhr = new ActiveXObject('Microsoft.XMLHTTP');
+			}
+			catch(e) {
+				xhr = null;
+			}
+		}
+		else { xhr = new XMLHttpRequest(); }
+
+		xhr.onreadystatechange = function(event) {
+			if (xhr.readyState === 4 && xhr.responseText) {
+				if (callback && callbackScope) callback.call(callbackScope, JSON.parse(xhr.responseText));
+				else if (callback) callback(JSON.parse(xhr.responseText));
+			}
+		};
+
+		return xhr;
+	}
+};
+
+/**
+ * NinjaResult
+ * @description Acts as a payload package for return results throughout the Ninja JS library.
+ *              Object can be instantiated in multiple ways.
+ *              new Ninja.Result({ result, message, payload });
+ *              new Ninja.Result(result, payload); // if result === true
+ *              new Ninja.Result(result, message); // if result === false
+ *              new Ninja.Result(result, message, payload);
+ *
+ *
+ * @param {object} options Result options {result:bool, message:string, payload:object}
+ */
+Ninja.Result = function(options) {
+
+	var result = false;
+	var message = '';
+	var payload;
+
+	// object to be returned.
+	var object;
+
+	if (arguments.length == 3) {
+		// results called with 3 arguments (result, message, payload)
+
+		result = arguments[0];
+		message = arguments[1];
+		payload = arguments[2];
+	}
+
+	else if (arguments.length == 2) {
+
+		result = arguments[0];
+
+		if (result) {
+			// 2nd argument is the payload. no message required
+			payload = arguments[1];
+		} else {
+			// 2nd argument is an error message
+			message = arguments[1];
+		}
+	}
+
+	else if (arguments.length == 1) {
+		// argument is an object
+		if (options.result) result = options.result;
+		if (options.message) message = options.message;
+		if (options.payload) payload = options.payload;
+
+	}
+
+	// construct the return object
+	object = {
+		result: result,
+		message: message,
+		payload: payload
+	};
+
+
+	return object;
+};
+
 
