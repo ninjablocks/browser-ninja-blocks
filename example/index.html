@@ -1,18 +1,91 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" ng-app>
 <head>
 	<meta charset="UTF-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0;" />
 	<title>Ninja JS API</title>
 
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css">
 </head>
 <body>
-	<h1>Example Javascript Block</h1>
 
+	<div class="navbar navbar-fixed-top" ng-controller="NavbarController">
+		<div class="navbar-inner">
+			<div class="container">
+			<a href="#" class="brand">
+				<i class="icon"><img src="http://d30clf1wiynadm.cloudfront.net/images/gravatar-default.png" style="height: 23px"></i>
+				Ninja Browser Block
+			</a>
+			<form class="navbar-search pull-right">
+				<input type="text" name="ninja_server" id="ninja_server" placeholder="Ninja Cloud Url" ng-model="Ninja.Options.server" />
+			</form>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+
+
+		<section class="activation" ng-controller="ActivateController">
+			<div class="alert alert-info" ng-show="!Block.Options.token">
+				<h4>Block Activation</h4>
+				<p>
+					Usage of Browser Block requires activation through the <a href="{{ Ninja.Options.server }}" target="_blank">Ninja Cloud</a>.
+					Please navigate to the <a href="{{ Ninja.Options.server }}" target="_blank">Ninja Cloud</a> to activate this block by entering {{ Block.Options.node_id }} as the Block's serial number.
+				</p>
+				<p>
+					<em>This block will disappear once the block has been activated</em>
+				</p>
+
+			</div>
+			<div class="alert alert-success" ng-show="Block.Options.token">
+				<h4>Block Activated!</h4>
+			</div>
+		</section>
+
+
+		<section class="devices show-grid" ng-controller="DevicesController" ng-show="Block.Options.token">
+			<h2>Block Devices ({{ Block.Devices.length }})</h2>
+			<div class="row show-grid">
+				<div class="span4 device" ng-repeat="Device in Block.Devices">
+					<h5>{{ Device.Options.name }} ({{ Device.Options.type }})</h5>
+					
+
+					<div class="led" ng-show="Device.Options.type == NinjaDeviceTypes.RGBLED">
+						<p>led</p>
+						<div class="element img-circle" style="background-color: #EE6666; width: 100px; height: 100px;"></div>
+					</div>
+
+					<div class="button" ng-show="Device.Options.type == NinjaDeviceTypes.BUTTON">
+						
+					</div>
+
+				</div>
+			</div>
+
+
+		</section>
+
+	</div>
+	
+
+
+
+
+	<!-- Libraries -->
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.1/bootstrap.min.js
+"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.2/angular.min.js"></script>
+	<script type="text/javascript" src="lib/geo-location/gears_init.js"></script>
+	<script type="text/javascript" src="lib/geo-location/geo-min.js"></script>
 	<script type="text/javascript" src="../lib/ninja.js"></script>
-	<script type="text/javascript" src="sample-block.js"></script>
-	
-	
+	<!-- End Libraries -->
+
+	<script type="text/javascript" src="js/sample-block.js"></script>
+
+
+
 </body>
 </html>
 

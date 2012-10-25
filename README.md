@@ -19,8 +19,8 @@ A single instance of this object is required to utilise the library and an optio
 var options = {
     server: "https://a.ninja.is",
     version: 0,
-    access_token: "YOUR OAUTH2 ACCESS TOKEN",
-    user_access_token: "YOUR USER ACCESS TOKEN"
+    access_token: "YOUR_OAUTH2_ACCESS_TOKEN",
+    user_access_token: "YOUR_USER_ACCESS_TOKEN"
 }
 var ninja = new Ninja(options);
 ```
@@ -28,7 +28,7 @@ var ninja = new Ninja(options);
 Options can be modified post-instantiation by interrogating the `Options` sub-object.
 
 ```javascript
-ninja.Options.access_token = "YOUR OAUTH2 ACCESS TOKEN";
+ninja.Options.access_token = "YOUR_OAUTH2_ACCESS_TOKEN";
 ```
 
 ---
