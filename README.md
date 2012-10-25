@@ -120,7 +120,7 @@ Once instantiated, the device must also be registered against a block
 
 ```javascript
 var led = new ninja.Device({
-    type: ninja.Types.DEVICE_TYPES.RGBLED,
+    type: Ninja.DeviceTypes.RGBLED,
     type_id: 1000,
     name: 'My LED',
     vendor: 0,
