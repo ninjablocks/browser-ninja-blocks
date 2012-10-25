@@ -91,7 +91,7 @@ Once instantiated, the device must also be registered against a block
         <td>*</td>
     </tr>
     <tr>
-        <td>type_id</td>
+        <td>device_id</td>
         <td>A numeric value of the device (see Ninja Blocks Device Id list). </td>
         <td>*</td>
     </tr>
@@ -121,7 +121,7 @@ Once instantiated, the device must also be registered against a block
 ```javascript
 var led = new ninja.Device({
     type: Ninja.DeviceTypes.RGBLED,
-    type_id: 1000,
+    device_id: 1000,
     name: 'My LED',
     vendor: 0,
     port: 0,
