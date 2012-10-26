@@ -7,44 +7,7 @@
  * their predetermined authentication token.
  */
 
-
-// Instantiate a new Ninja
-var ninja = new Ninja({ server: 'http://localhost:3000' });
-
-
-// Create a Block
-var block = new ninja.Block({ node_id: 'BROWSERBLOCK' });
-
-
-// Create a Button Device
-var button = new ninja.Device({
-	type: Ninja.DeviceTypes.BUTTON,
-	device_id: 5,
-	name: 'My Button',
-	vendor: 0,
-	port: 0
-});
-
-block.RegisterDevice(button);
-
-
-// Create an LED device
-var led = new ninja.Device({
-	type: Ninja.DeviceTypes.RGBLED,
-	device_id: 1000,
-	name: 'My LED',
-	vendor: 0,
-	port: 0,
-	value: "FFFFFF",
-	onActuate: function(data, device) {
-		console.log("LED Actuated: ", data);
-	}
-});
-
-block.RegisterDevice(led);
-
-//--------------------------------------------------
-// Angular JS'ey stuff
+/** LOCAL STORAGE **/
 
 function GetLocalStorage() {
 	if('localStorage' in window && window['localStorage'] !== null) {
@@ -93,6 +56,48 @@ function ClearStorage() {
 	}
 }
 
+
+
+/** NINJA API **/
+
+
+// Instantiate a new Ninja
+var ninja = new Ninja({ server: 'http://localhost:3000' });
+
+
+// Create a Block
+var block = new ninja.Block({ node_id: 'BROWSERBLOCK' });
+
+
+// Create a Button Device
+var button = new ninja.Device({
+	type: Ninja.DeviceTypes.BUTTON,
+	device_id: 5,
+	name: 'My Button',
+	vendor: 0,
+	port: 0
+});
+
+block.RegisterDevice(button);
+
+
+// Create an LED device
+var led = new ninja.Device({
+	type: Ninja.DeviceTypes.RGBLED,
+	device_id: 1000,
+	name: 'My LED',
+	vendor: 0,
+	port: 0,
+	value: GetStorageValue("LEDColor"),
+	onActuate: function(data, device) {
+		console.log("LED Actuated: ", data);
+	}
+});
+
+block.RegisterDevice(led);
+
+//--------------------------------------------------
+// Angular JS'ey stuff
 
 
 
@@ -163,6 +168,8 @@ function LEDController($scope) {
 	$scope.SetColor = function(color) {
 		$scope.$apply(function() {
 			$scope.Device.Options.value = color;
+			$scope.Actuate();
+			SetStorageValue("LEDColor", color);
 		});
 	
 	};

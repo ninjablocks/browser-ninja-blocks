@@ -59,7 +59,7 @@
 					<div ng-switch on="Device.Options.type">
 
 						<div ng-switch-when="led" class="led" ng-controller="LEDController" ng-init="Actuate();">
-							<div class="element img-circle" style="background-color: #{{ Device.Options.value }}"></div>
+							<div class="element img-circle" style="background-color: #{{ Device.Options.value }}" ng-click="Actuate()"></div>
 						</div>
 
 						<div ng-switch-when="button" class="button" ng-controller="ButtonController" ng-init="DeviceButton = Device;">
