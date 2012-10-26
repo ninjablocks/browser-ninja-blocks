@@ -30,7 +30,8 @@ function SetStorageValue(key, value) {
 function GetStorageValue(key) {
 	var store = GetLocalStorage();
 	if (store) {
-		return store.getItem(key);
+		var value = store.getItem(key);
+		return (value !== "undefined" && value !== "null" && value !== "") ? value : undefined;
 	} else {
 		return undefined;
 	}
@@ -60,19 +61,34 @@ function ClearStorage() {
 
 /** NINJA API **/
 
+/** Randomly generate the block id **/
+function randomString(length) {
+	var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789123456789";
+	var string_length = length;
+	var randomstring = '';
+	for (var i=0; i<string_length; i++) {
+		var rnum = Math.floor(Math.random() * chars.length);
+		randomstring += chars.substring(rnum,rnum+1);
+	}
+	return randomstring;
+}
+
+
 
 // Instantiate a new Ninja
-var ninja = new Ninja({ server: 'http://localhost:3000' });
+var ninja = new Ninja({ server: 'https://staging.ninja.is' });
 
 
 // Create a Block
-var block = new ninja.Block({ node_id: 'BROWSERBLOCK' });
+var blockNodeIdKey = "BlockID";
+var blockNodeId = (GetStorageValue(blockNodeIdKey) !== undefined) ? GetStorageValue(blockNodeIdKey) : "BROWSER" + randomString(5);
+var block = new ninja.Block({ nodeId: blockNodeId });
 
 
 // Create a Button Device
 var button = new ninja.Device({
 	type: Ninja.DeviceTypes.BUTTON,
-	device_id: 5,
+	deviceId: 5,
 	name: 'My Button',
 	vendor: 0,
 	port: 0
@@ -80,11 +96,10 @@ var button = new ninja.Device({
 
 block.RegisterDevice(button);
 
-
 // Create an LED device
 var led = new ninja.Device({
 	type: Ninja.DeviceTypes.RGBLED,
-	device_id: 1000,
+	deviceId: 1000,
 	name: 'My LED',
 	vendor: 0,
 	port: 0,
@@ -117,6 +132,7 @@ function ActivateController($scope) {
 	// Deactivates this block from the cloud
 	$scope.Deactivate = function() {
 		if (ClearStorage()) {
+			$scope.Block.Options.nodeId = undefined;
 			$scope.Block.Options.token = undefined;
 		}
 
@@ -129,6 +145,7 @@ function ActivateController($scope) {
 			$scope.$apply();
 			// Set the local storage
 			SetStorageValue($scope.TokenKey, token);
+			SetStorageValue(blockNodeIdKey, $scope.Block.Options.nodeId);
 		});
 	};
 
@@ -136,7 +153,10 @@ function ActivateController($scope) {
 	// Start listening for commands
 	$scope.Listen = function() {
 		$scope.Block.Listen();
-		console.log("Listening");
+	};
+
+	$scope.IsActivated = function() {
+		return ($scope.Block.Options.token !== undefined);
 	};
 
 	// AUTO ACTIVATE IF NO TOKEN IN LOCAL STORAGE
@@ -161,11 +181,11 @@ function LEDController($scope) {
 	$scope.Block = block;
 
 	$scope.Actuate = function() {
-		console.log("actuating LED");
 		$scope.Device.Emit($scope.Device.Options.value);
 	};
 
 	$scope.SetColor = function(color) {
+		console.log("set led: ", color);
 		$scope.$apply(function() {
 			$scope.Device.Options.value = color;
 			$scope.Actuate();
@@ -178,6 +198,15 @@ function LEDController($scope) {
 		$scope.Device = device;
 	};
 
+
+	$scope.Heartbeat = function() {
+		$scope.heartbeat = setInterval($scope.Actuate, 500);
+	};
+
+	$scope.Stop = function() {
+		clearInterval($scope.heartbeat);
+	};
+
 	$scope.Device.Actuate = $scope.SetColor;
 
 }
@@ -188,14 +217,19 @@ function ButtonController($scope) {
 	$scope.Block = block;
 
 	$scope.Click = function(device) {
+		console.log("Button click");
 		$scope.Device.Emit(1);
-		console.log("Down");
 	};
 
 	$scope.Release = function(device) {
+		console.log("Button release");
 		$scope.Device.Emit(0);
-		console.log("Up");
 	};
+}
+
+
+function DebugController($scope) {
+
 }
 
 

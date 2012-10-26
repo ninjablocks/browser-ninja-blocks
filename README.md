@@ -19,8 +19,8 @@ A single instance of this object is required to utilise the library and an optio
 var options = {
     server: "https://a.ninja.is",
     version: 0,
-    access_token: "YOUR_OAUTH2_ACCESS_TOKEN",
-    user_access_token: "YOUR_USER_ACCESS_TOKEN"
+    accessToken: "YOUR_OAUTH2_ACCESS_TOKEN",
+    userAccessToken: "YOUR_USER_ACCESS_TOKEN"
 }
 var ninja = new Ninja(options);
 ```
@@ -37,13 +37,13 @@ ninja.Options.access_token = "YOUR_OAUTH2_ACCESS_TOKEN";
 
 Blocks can be created by instantiating a new `ninja.Block()` object.
 
-Instantiation of a `Block` requires a `node_id` to be passed in and before the block can be made of any use, it must also be activated.
+Instantiation of a `Block` requires a `nodeId` to be passed in and before the block can be made of any use, it must also be activated.
 
 _Note: Activation is a 2-way challenge against the Ninja Cloud which will require the user to claim the block through their [Ninja dashboard](http://a.ninja.is)_
 
 ```javascript
 var block = new ninja.Block({
-    node_id: '123456789JAVASCRIPT',
+    nodeId: '123456789JAVASCRIPT',
 });
 block.Activate();
 ```
@@ -91,7 +91,7 @@ Once instantiated, the device must also be registered against a block
         <td>*</td>
     </tr>
     <tr>
-        <td>device_id</td>
+        <td>deviceId</td>
         <td>A numeric value of the device (see Ninja Blocks Device Id list). </td>
         <td>*</td>
     </tr>
@@ -121,7 +121,7 @@ Once instantiated, the device must also be registered against a block
 ```javascript
 var led = new ninja.Device({
     type: Ninja.DeviceTypes.RGBLED,
-    device_id: 1000,
+    deviceId: 1000,
     name: 'My LED',
     vendor: 0,
     port: 0,

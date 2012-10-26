@@ -11,7 +11,7 @@
 </head>
 <body>
 
-	<div class="navbar navbar-fixed-top" ng-controller="NavbarController">
+	<div class="navbar navbar-static-top" ng-controller="NavbarController">
 		<div class="navbar-inner">
 			<div class="container">
 			<a href="#" class="brand">
@@ -19,28 +19,28 @@
 				Ninja Browser Block
 			</a>
 			<form class="navbar-search pull-right">
-				<input type="text" name="ninja_server" id="ninja_server" placeholder="Ninja Cloud Url" ng-model="Ninja.Options.server" />
+				<input type="text" class="input-small" name="ninja_server" id="ninja_server" placeholder="Ninja Cloud Url" ng-model="Ninja.Options.server" />
 			</form>
 			</div>
 		</div>
 	</div>
 	<div class="container">
-
+		<br>
 
 		<section class="activation" ng-controller="ActivateController">
 			<div class="alert alert-info" ng-show="!Block.Options.token">
 				<h4>Block Activation</h4>
 				<p>
 					Usage of Browser Block requires activation through the <a href="{{ Ninja.Options.server }}" target="_blank">Ninja Cloud</a>.
-					Please navigate to the <a href="{{ Ninja.Options.server }}" target="_blank">Ninja Cloud</a> to activate this block by entering {{ Block.Options.node_id }} as the Block's serial number.
-				</p>
-				<p>
-					<em>This block will disappear once the block has been activated</em>
+					Please navigate to the <a href="{{ Ninja.Options.server }}" target="_blank">Ninja Cloud</a> to activate this block by entering <span class="label label-info">{{ Block.Options.nodeId }}</span> as the Block's serial number.
 				</p>
 
 			</div>
 			<div class="alert alert-success" ng-show="Block.Options.token">
-				<h4 ng-init="Listen()">Block Activated!</h4>
+				<span ng-switch on="IsActivated()">
+					<span ng-switch-when="true"><span ng-init="Listen()" /></span>
+				</span>
+				<h4>Block Activated!</h4>
 				<small>Token: {{ Block.Options.token }}</small>
 				<br>
 				<a href="#" class="btn btn-danger" ng-click="Deactivate()">Deactivate</a>
@@ -48,7 +48,6 @@
 
 			</div>
 		</section>
-
 
 		<section class="devices show-grid" ng-controller="DevicesController" ng-show="Block.Options.token">
 			<h2>Block Devices ({{ Block.Devices.length }})</h2>
@@ -68,16 +67,15 @@
 								</div>	
 							</div>
 						</div>
-
-
 					</div>
-					
-
-
 				</div>
 			</div>
 
 
+		</section>
+
+		<section class="debug" ng-controller="DebugController">
+			
 		</section>
 
 	</div>

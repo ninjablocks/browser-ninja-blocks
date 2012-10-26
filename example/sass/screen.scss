@@ -5,6 +5,14 @@
 
 @import "compass/css3";
 
+body {
+	-webkit-user-select: none;
+}
+
+input#ninja_server {
+	font-size: 10px;
+}
+
 section.devices {
 
 	.device {

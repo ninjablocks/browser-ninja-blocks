@@ -2,7 +2,17 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-/* line 10, ../sass/screen.scss */
+/* line 8, ../sass/screen.scss */
+body {
+  -webkit-user-select: none;
+}
+
+/* line 12, ../sass/screen.scss */
+input#ninja_server {
+  font-size: 10px;
+}
+
+/* line 18, ../sass/screen.scss */
 section.devices .device {
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
@@ -13,7 +23,7 @@ section.devices .device {
   border: 1px solid #EEE;
   text-align: center;
 }
-/* line 16, ../sass/screen.scss */
+/* line 24, ../sass/screen.scss */
 section.devices .device .name {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -24,22 +34,22 @@ section.devices .device .name {
   background: #454545;
   padding: 2px;
 }
-/* line 23, ../sass/screen.scss */
+/* line 31, ../sass/screen.scss */
 section.devices .device .element {
   width: 100px;
   height: 100px;
   margin: 0 auto;
 }
-/* line 31, ../sass/screen.scss */
+/* line 39, ../sass/screen.scss */
 section.devices .device .led .element {
   background-color: #FFFFFF;
   border: 2px solid #EEEEEE;
 }
-/* line 40, ../sass/screen.scss */
+/* line 48, ../sass/screen.scss */
 section.devices .device .button .element {
   background-color: #efaca9;
 }
-/* line 43, ../sass/screen.scss */
+/* line 51, ../sass/screen.scss */
 section.devices .device .button .element:hover {
   background-color: #dd4d46;
 }
