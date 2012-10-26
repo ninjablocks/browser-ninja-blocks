@@ -3,10 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0;" />
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1;" />
 	<title>Ninja JS API</title>
 
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css">
+	<link rel="stylesheet" href="css/screen.css">
 </head>
 <body>
 
@@ -39,7 +40,12 @@
 
 			</div>
 			<div class="alert alert-success" ng-show="Block.Options.token">
-				<h4>Block Activated!</h4>
+				<h4 ng-init="Listen()">Block Activated!</h4>
+				<small>Token: {{ Block.Options.token }}</small>
+				<br>
+				<a href="#" class="btn btn-danger" ng-click="Deactivate()">Deactivate</a>
+
+
 			</div>
 		</section>
 
@@ -47,18 +53,26 @@
 		<section class="devices show-grid" ng-controller="DevicesController" ng-show="Block.Options.token">
 			<h2>Block Devices ({{ Block.Devices.length }})</h2>
 			<div class="row show-grid">
-				<div class="span4 device" ng-repeat="Device in Block.Devices">
-					<h5>{{ Device.Options.name }} ({{ Device.Options.type }})</h5>
+				<div class="span3 device" ng-repeat="Device in Block.Devices">
+					<h5 class="name">{{ Device.Options.name }}</h5>
+					
+					<div ng-switch on="Device.Options.type">
+
+						<div ng-switch-when="led" class="led" ng-controller="LEDController" ng-init="Actuate();">
+							<div class="element img-circle" style="background-color: #{{ Device.Options.value }}"></div>
+						</div>
+
+						<div ng-switch-when="button" class="button" ng-controller="ButtonController" ng-init="DeviceButton = Device;">
+							<div>
+								<div class="element img-circle" ng-mousedown="Click(Device)" ng-mouseup="Release(Device)">
+								</div>	
+							</div>
+						</div>
+
+
+					</div>
 					
 
-					<div class="led" ng-show="Device.Options.type == NinjaDeviceTypes.RGBLED">
-						<p>led</p>
-						<div class="element img-circle" style="background-color: #EE6666; width: 100px; height: 100px;"></div>
-					</div>
-
-					<div class="button" ng-show="Device.Options.type == NinjaDeviceTypes.BUTTON">
-						
-					</div>
 
 				</div>
 			</div>
