@@ -42,6 +42,21 @@ section.devices {
 			}
 		}
 
+		&.location {
+			position: relative;
+			width: 200px;
+
+			.element {
+				width: 100%;
+				height: 100%;
+			}
+
+			#locationMap {
+				width: 100%;
+				height: 200px;
+			}
+		}
+
 
 		// BUTTON
 		.button {

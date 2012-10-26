@@ -45,11 +45,26 @@ section.devices .device .led .element {
   background-color: #FFFFFF;
   border: 2px solid #EEEEEE;
 }
-/* line 48, ../sass/screen.scss */
+/* line 45, ../sass/screen.scss */
+section.devices .device.location {
+  position: relative;
+  width: 200px;
+}
+/* line 49, ../sass/screen.scss */
+section.devices .device.location .element {
+  width: 100%;
+  height: 100%;
+}
+/* line 54, ../sass/screen.scss */
+section.devices .device.location #locationMap {
+  width: 100%;
+  height: 200px;
+}
+/* line 63, ../sass/screen.scss */
 section.devices .device .button .element {
   background-color: #efaca9;
 }
-/* line 51, ../sass/screen.scss */
+/* line 66, ../sass/screen.scss */
 section.devices .device .button .element:hover {
   background-color: #dd4d46;
 }

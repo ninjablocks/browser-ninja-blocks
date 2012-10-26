@@ -74,14 +74,21 @@ function randomString(length) {
 }
 
 
+function GetBlockID() {
+	var blockId = "";
+
+	var blockNodeIdKey = "BlockID";
+	blockId = (GetStorageValue(blockNodeIdKey) !== undefined && GetStorageValue(blockNodeIdKey) !== null) ? GetStorageValue(blockNodeIdKey) : "BROWSER" + randomString(5);
+
+	return blockId;
+}
 
 // Instantiate a new Ninja
 var ninja = new Ninja({ server: 'https://staging.ninja.is' });
 
 
 // Create a Block
-var blockNodeIdKey = "BlockID";
-var blockNodeId = (GetStorageValue(blockNodeIdKey) !== undefined) ? GetStorageValue(blockNodeIdKey) : "BROWSER" + randomString(5);
+var blockNodeId = GetBlockID();
 var block = new ninja.Block({ nodeId: blockNodeId });
 
 
@@ -111,6 +118,22 @@ var led = new ninja.Device({
 
 block.RegisterDevice(led);
 
+// Create a GPS device
+var gps = new ninja.Device({
+	type: Ninja.DeviceTypes.LOCATION,
+	deviceId: 2,
+	vendor: 1,
+	name: 'My Location',
+	port: 0
+});
+
+block.RegisterDevice(gps);
+
+
+
+
+
+
 //--------------------------------------------------
 // Angular JS'ey stuff
 
@@ -123,8 +146,8 @@ function NavbarController($scope) {
 }
 
 
-function ActivateController($scope) {
-	$scope.Ninja = ninja;
+function BlockController($scope) {
+	$scope.ninja = ninja;
 	$scope.Block = block;
 	$scope.TokenKey = "NinjaBlockToken";
 
@@ -132,8 +155,10 @@ function ActivateController($scope) {
 	// Deactivates this block from the cloud
 	$scope.Deactivate = function() {
 		if (ClearStorage()) {
+			$scope.StopListening();
 			$scope.Block.Options.nodeId = undefined;
 			$scope.Block.Options.token = undefined;
+			$scope.Block.Options.nodeId = GetBlockID();
 		}
 
 		// Reset the activation
@@ -145,7 +170,10 @@ function ActivateController($scope) {
 			$scope.$apply();
 			// Set the local storage
 			SetStorageValue($scope.TokenKey, token);
-			SetStorageValue(blockNodeIdKey, $scope.Block.Options.nodeId);
+			SetStorageValue("BlockID", $scope.Block.Options.nodeId);
+
+			// Actuate the LED's
+			$scope.StartUp();
 		});
 	};
 
@@ -155,15 +183,38 @@ function ActivateController($scope) {
 		$scope.Block.Listen();
 	};
 
+	$scope.StopListening = function() {
+		$scope.Block.Stop();
+	};
+
 	$scope.IsActivated = function() {
 		return ($scope.Block.Options.token !== undefined);
+	};
+
+	$scope.TouchLEDs = function() {
+		var ledDevices = $scope.Block.GetDevicesByType(Ninja.DeviceTypes.RGBLED);
+		for (var i=0; i<ledDevices.length; i++) {
+			var ledDevice = ledDevices[i];
+			ledDevice.Emit(ledDevice.Options.value);
+			console.log("Touch LED: ", ledDevice.Options.value);
+		}
+
+	};
+
+	$scope.StartUp = function() {
+		$scope.Listen();
+		$scope.TouchLEDs();
 	};
 
 	// AUTO ACTIVATE IF NO TOKEN IN LOCAL STORAGE
 	$scope.Block.Options.token = GetStorageValue($scope.TokenKey);
 	if (!$scope.Block.Options.token) {
 		$scope.Activate();
+	} else {
+		$scope.StartUp();
 	}
+
+
 
 }
 
@@ -185,7 +236,6 @@ function LEDController($scope) {
 	};
 
 	$scope.SetColor = function(color) {
-		console.log("set led: ", color);
 		$scope.$apply(function() {
 			$scope.Device.Options.value = color;
 			$scope.Actuate();
@@ -225,6 +275,65 @@ function ButtonController($scope) {
 		console.log("Button release");
 		$scope.Device.Emit(0);
 	};
+}
+
+function LocationController($scope) {
+	$scope.Ninja = ninja;
+	$scope.Block = block;
+
+	$scope.Location;
+	$scope.Status;
+	$scope.Map;
+	$scope.MapMarker;
+
+	$scope.UpdateLocation = function(data) {
+		$scope.$apply(function() {
+
+			$scope.Location = {
+				lat: data.coords.latitude,
+				lng: data.coords.longitude,
+				accuracy: data.coords.accuracy
+			};
+
+			$scope.GenerateMap();
+
+		});
+	};
+
+	$scope.SetMapMarker = function() {
+		var googleLocation = new google.maps.LatLng($scope.Location.lat, $scope.Location.lng);
+		var marker = new google.maps.Marker({
+			position: googleLocation,
+			map: $scope.Map,
+			title: "Me!"
+		});
+
+	};
+
+	$scope.GenerateMap = function() {
+		var mapOptions = {
+			center: new google.maps.LatLng($scope.Location.lat, $scope.Location.lng),
+			zoom: 16,
+			disableDefaultUI: true,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+
+		$scope.Map = new google.maps.Map(document.getElementById("locationMap"), mapOptions);
+
+		$scope.SetMapMarker();
+	};
+
+	if(geo_position_js.init()){
+		geo_position_js.getCurrentPosition($scope.UpdateLocation, function() {
+			$scope.$apply(function() {
+				$scope.Status = "Problem retrieving GPS Location";	
+			});
+			
+		});
+	} else{
+		$scope.Status = "Location Not Available";
+	}
+
 }
 
 

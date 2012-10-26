@@ -27,12 +27,12 @@
 	<div class="container">
 		<br>
 
-		<section class="activation" ng-controller="ActivateController">
+		<section class="activation" ng-controller="BlockController">
 			<div class="alert alert-info" ng-show="!Block.Options.token">
 				<h4>Block Activation</h4>
 				<p>
-					Usage of Browser Block requires activation through the <a href="{{ Ninja.Options.server }}" target="_blank">Ninja Cloud</a>.
-					Please navigate to the <a href="{{ Ninja.Options.server }}" target="_blank">Ninja Cloud</a> to activate this block by entering <span class="label label-info">{{ Block.Options.nodeId }}</span> as the Block's serial number.
+					Usage of Browser Block requires activation through the <a href="{{ ninja.Options.server }}" target="_blank">Ninja Cloud</a>.
+					Please navigate to the <a href="{{ ninja.Options.server }}" target="_blank">Ninja Cloud</a> to activate this block by entering <span class="label label-info">{{ Block.Options.nodeId }}</span> as the Block's serial number.
 				</p>
 
 			</div>
@@ -50,21 +50,33 @@
 		</section>
 
 		<section class="devices show-grid" ng-controller="DevicesController" ng-show="Block.Options.token">
-			<h2>Block Devices ({{ Block.Devices.length }})</h2>
+			<h3>Onboard Devices</h3>
 			<div class="row show-grid">
-				<div class="span3 device" ng-repeat="Device in Block.Devices">
+				<div class="span3 device {{Device.Options.type }}" ng-repeat="Device in Block.Devices">
 					<h5 class="name">{{ Device.Options.name }}</h5>
 					
 					<div ng-switch on="Device.Options.type">
 
-						<div ng-switch-when="led" class="led" ng-controller="LEDController" ng-init="Actuate();">
+						<div ng-switch-when="led" class="led" ng-controller="LEDController">
 							<div class="element img-circle" style="background-color: #{{ Device.Options.value }}" ng-click="Actuate()"></div>
 						</div>
 
-						<div ng-switch-when="button" class="button" ng-controller="ButtonController" ng-init="DeviceButton = Device;">
-							<div>
-								<div class="element img-circle" ng-mousedown="Click(Device)" ng-mouseup="Release(Device)">
-								</div>	
+						<div ng-switch-when="button" class="button" ng-controller="ButtonController">
+							<div class="element img-circle" ng-mousedown="Click(Device)" ng-mouseup="Release(Device)">
+							</div>	
+						</div>
+
+						<div ng-switch-when="location" class="location" ng-controller="LocationController">
+							<div class="element">
+								<div id="locationMap"></div>
+								<span class="label label-success">{{ Location.lat.toFixed(2) }}</span>
+								<span class="label label-success">{{ Location.lng.toFixed(2) }}</span>
+								<br>
+								<span class="label">Accuracy: {{ Location.accuracy }}</span>
+
+								<br>
+								{{ Status }}
+								<a href="#" class="btn btn-success">Send</a>
 							</div>
 						</div>
 					</div>
@@ -89,8 +101,10 @@
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.1/bootstrap.min.js
 "></script>
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.2/angular.min.js"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyCKT6gOIh2-lqCObijhsJ2r9WfdJ12I-wk"></script>
 	<script type="text/javascript" src="lib/geo-location/gears_init.js"></script>
 	<script type="text/javascript" src="lib/geo-location/geo-min.js"></script>
+	<script type="text/javascript"></script>
 	<script type="text/javascript" src="../lib/ninja.js"></script>
 	<!-- End Libraries -->
 
