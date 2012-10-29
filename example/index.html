@@ -52,7 +52,7 @@
 		<section class="devices show-grid" ng-controller="DevicesController" ng-show="Block.Options.token">
 			<h3>Onboard Devices</h3>
 			<div class="row show-grid">
-				<div class="span3 device {{Device.Options.type }}" ng-repeat="Device in Block.Devices">
+				<div class="span4 device {{Device.Options.type }}" ng-repeat="Device in Block.Devices">
 					<h5 class="name">{{ Device.Options.name }}</h5>
 					
 					<div ng-switch on="Device.Options.type">
@@ -76,7 +76,7 @@
 
 								<br>
 								{{ Status }}
-								<a href="#" class="btn btn-success">Send</a>
+								<a href="" class="btn btn-success" ng-click="SendLocation">Send</a>
 							</div>
 						</div>
 					</div>

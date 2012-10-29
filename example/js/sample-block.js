@@ -7,6 +7,8 @@
  * their predetermined authentication token.
  */
 
+var NinjaServer = 'https://staging.ninja.is';
+
 /** LOCAL STORAGE **/
 
 function GetLocalStorage() {
@@ -84,7 +86,7 @@ function GetBlockID() {
 }
 
 // Instantiate a new Ninja
-var ninja = new Ninja({ server: 'https://staging.ninja.is' });
+var ninja = new Ninja({ server: NinjaServer });
 
 
 // Create a Block
@@ -110,7 +112,7 @@ var led = new ninja.Device({
 	name: 'My LED',
 	vendor: 0,
 	port: 0,
-	value: GetStorageValue("LEDColor"),
+	value: GetStorageValue("LEDColor") || "FF00FF",
 	onActuate: function(data, device) {
 		console.log("LED Actuated: ", data);
 	}
@@ -172,7 +174,7 @@ function BlockController($scope) {
 			SetStorageValue($scope.TokenKey, token);
 			SetStorageValue("BlockID", $scope.Block.Options.nodeId);
 
-			// Actuate the LED's
+			// Start up the block
 			$scope.StartUp();
 		});
 	};
@@ -180,6 +182,7 @@ function BlockController($scope) {
 
 	// Start listening for commands
 	$scope.Listen = function() {
+		console.log("Listening to ", $scope.Block.Options.token);
 		$scope.Block.Listen();
 	};
 
@@ -196,7 +199,6 @@ function BlockController($scope) {
 		for (var i=0; i<ledDevices.length; i++) {
 			var ledDevice = ledDevices[i];
 			ledDevice.Emit(ledDevice.Options.value);
-			console.log("Touch LED: ", ledDevice.Options.value);
 		}
 
 	};
@@ -296,6 +298,8 @@ function LocationController($scope) {
 			};
 
 			$scope.GenerateMap();
+
+			$scope.Device.Options.value = $scope.Location;
 
 		});
 	};
