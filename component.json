@@ -1,0 +1,8 @@
+{
+  "name": "ninjablocks",
+  "version": "0.0.1",
+  "main": "./lib/ninja.js",
+  "dependencies": {
+ 
+  }
+}
