@@ -61,6 +61,7 @@ function ClearStorage() {
 
 
 
+
 /** NINJA API **/
 
 /** Randomly generate the block id **/
@@ -182,7 +183,6 @@ function BlockController($scope) {
 
 	// Start listening for commands
 	$scope.Listen = function() {
-		console.log("Listening to ", $scope.Block.Options.token);
 		$scope.Block.Listen();
 	};
 
@@ -191,7 +191,7 @@ function BlockController($scope) {
 	};
 
 	$scope.IsActivated = function() {
-		return ($scope.Block.Options.token !== undefined);
+		return ($scope.Block.Options.token !== null && $scope.Block.Options.token !== undefined && $scope.Block.Options.token !== "");
 	};
 
 	$scope.TouchLEDs = function() {
