@@ -7,7 +7,7 @@
  * their predetermined authentication token.
  */
 
-var NinjaServer = 'https://staging.ninja.is';
+var NinjaServer = 'https://a.ninja.is';
 
 /** LOCAL STORAGE **/
 
