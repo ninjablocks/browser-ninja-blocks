@@ -1,1 +1,6 @@
 *.coffee
+components/codemirror/demo
+components/codemirror/doc
+components/foundation/test
+components/foundation/docs
+components/foundation/templates

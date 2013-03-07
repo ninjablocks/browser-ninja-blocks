@@ -56,7 +56,7 @@
           <section class="large-4 columns" ng-controller="BlocksCtrl">
 
             <div class="content">
-              <h5>Block Factory</h5>
+              <h5>1. Block Factory</h5>
               <div class="blocks">
                   <div class="block" ng-repeat="Block in Blocks" ng-controller="BlockCtrl" ng-click="SelectBlock(Block)" ng-class="{selected:IsSelected()}">
                     <h5 class="nodeId" select-on-click>{{ Block.Options.nodeId }} </h5>
@@ -78,7 +78,7 @@
           <!-- DEVICES CONTROLLER -->
           <section class="large-8 columns" ng-controller="DeviceFactoryCtrl">
             <div class="content">
-              <h5>Device Factory</h5>
+              <h5>2. Device Factory</h5>
               <form class="factory custom row">
 
                 <fieldset class="small-12 large-6 columns">
@@ -141,8 +141,8 @@
                   <h6>Advanced</h6>
                   <div class="advanced">
                     <p>When this device gets actuated run the following function</p>
-                    <pre code-input-js readonly>onActuate: function(DA) {</pre>
-                    <div class="code" code-input-js="">
+                    <pre code-input-js readonly>onActuate: function(DA, block, device) {</pre>
+                    <div class="code" code-input-js indented wrap>
                       //console.log('My Data Value:', DA);
                     </div>
                     <pre code-input-js readonly>}</pre>
@@ -157,7 +157,7 @@
         <!-- DEVICES -->
         <div class="row"><div class="large-12 columns"><h5>Devices</h5></div></div>
         <div class="devices row" ng-controller="DevicesCtrl">
-          <div class="device radius large-4 columns" ng-repeat="Device in Devices">
+          <div id="{{ Device.GUID() }}" class="device radius large-4 columns" ng-repeat="Device in Devices">
             <div class="panel" ng-controller="DeviceCtrl">
               <h6><small>{{ Device.GUID() }}</small></h6>
               <h5><span class="status foundicon-star icon offline" ng-class="{offline:!Device.Options.block.IsListening()}"></span>{{ Device.Options.name }}</h5>
@@ -192,15 +192,16 @@
                   <input type="text" ng-model="Device.Options.value">
                 </div>
                 <div class="small-3 columns">
-                  <a href="" class="button small radius" ng-click="Emit()">Emit</a>
+                  <a href="" class="button small radius secondary" ng-click="Emit()">Emit</a>
                 </div>
               </div>
               <div class="row collapse">
                 <h6><span class="foundicon-down-arrow icon"></span>Actuate</h6>
                 <div class="code">
-                  <pre code-input-js readonly override>onActuate: function(DA) {</pre>
-                  <div code-input-js code="{{ Device.Options.onActuateCode }}" wrap></div>
+                  <pre code-input-js readonly override>onActuate: function(DA, block, device) {</pre>
+                  <div code-input-js code="{{ Device.Options.onActuateCode }}" wrap indented></div>
                   <pre code-input-js readonly override>}</pre>
+                  <a class="button tiny radius orange right" ng-click="UpdateOnActuate()"><strong>Update onActuate</strong></a>
                 </div>
               </div>
               <div class="remove foundicon-remove" ng-click="Remove()"></div>

@@ -1,9 +1,11 @@
 'use strict';
 
 blocktoolApp.controller('DeviceCtrl',
-  ['$rootScope', '$scope', 'Console', 'UIEvents'
-  , function($rootScope, $scope, console, UIEvents) {
+  ['$rootScope', '$scope', 'Console', 'UIEvents', 'BlockService'
+  , function($rootScope, $scope, console, UIEvents, BlockService) {
 
+
+    $scope.OnActuateCode = $scope.Device.Options.onActuateCode;
 
     /**
      * Emit a data value for the device
@@ -26,5 +28,26 @@ blocktoolApp.controller('DeviceCtrl',
     $rootScope.$on(UIEvents.DeviceActuate, function(event, device) {
       $scope.$apply();
     });
+
+    /**
+     * Updates this devices onActuate code
+     */
+    $scope.UpdateOnActuate = function() {
+
+      var onActuate = null;
+
+      try {
+        onActuate = new Function("DA", "block", "device", $scope.OnActuateCode);
+      } catch (e) {}
+
+      if (onActuate) {
+        var fn = BlockService.ConstructOnActuateFn(onActuate, $scope.Device).bind($scope.Device);
+
+        // Assign new functionality
+        $scope.Device.Actuate = fn;
+        $scope.Device.Options.onActuateCode = $scope.OnActuateCode;
+        $scope.Device.Options.onActuate = fn;
+      }
+    };
 
 }]);

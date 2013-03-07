@@ -10,6 +10,11 @@ blocktoolApp.directive('codeInputJs',
       console.log("[CodeMirror]: Creating...");
       element.addClass("codeInput");
 
+      if (attrs.hasOwnProperty("indented")) {
+        element.addClass("indented");
+      }
+
+
       var defaultText = element.text().trim();
       element.empty();
 

@@ -28,12 +28,6 @@
     pre {
       font-weight: bold;
       font-size: 11px;
-      
-      .CodeMirror {
-        height: auto;
-        @include box-shadow(none);
-        background: none;
-      }
     }
   }
 
@@ -45,23 +39,7 @@
     font-family: monospace;
     font-weight: bold;
     height: auto;
- 
-    .CodeMirror {
-      height: auto;
-      @include box-shadow(none);
-      background: none;
-      
 
-      .cm-tab:before {
-        content: '';
-      }
-    }
-
-    .CodeMirror-lines {
-      pre {
-        padding-left: 2em;
-      }
-    }
   }
 }
 

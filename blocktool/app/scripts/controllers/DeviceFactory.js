@@ -57,7 +57,7 @@ blocktoolApp.controller('DeviceFactoryCtrl',
      */
     $scope.ParseOnActuate = function(code) {
       try {
-        var onActuate = new Function("DA", code);
+        var onActuate = new Function("DA", "block", "device", code);
         return onActuate;
       } catch (e) {
         return null;
@@ -77,15 +77,16 @@ blocktoolApp.controller('DeviceFactoryCtrl',
       // Parse the code
       var onActuate = $scope.ParseOnActuate($scope.OnActuateCode);
 
+      var device = new NinjaService.Device(deviceOptions);
+
       // Wrap the on Actuate callback
-      deviceOptions.onActuate = BlockService.ConstructOnActuateFn(onActuate, $scope.DeviceOptions);
+      device.Actuate = BlockService.ConstructOnActuateFn(onActuate, device);
 
       // Set the actuate code
       if (onActuate) {
-        deviceOptions.onActuateCode = code;
+        device.Options.onActuateCode = code;
       }
 
-      var device = new NinjaService.Device(deviceOptions);
       var block = BlockService.GetBlockByNodeId($scope.BlockNodeId);
       if (block) {
         block.RegisterDevice(device);

@@ -80,15 +80,16 @@ blocktoolApp.factory('BlockService'
      * @param {Function} onActuateFn   User Defined actuate function
      * @param {Object} deviceOptions Device.Options object
      */
-    ConstructOnActuateFn: function(onActuateFn, deviceOptions) {
-      var fn = function(DA) {
-        var deviceProfile = _.clone(deviceOptions);
-        deviceProfile.value = DA;
+    ConstructOnActuateFn: function(onActuateFn, device) {
+      var fn = function(DA, block, device) {
+        device.Options.value = DA;
+
+        var deviceProfile = _.clone(device.Options);
 
         $rootScope.$broadcast(UIEvents.DeviceActuate, deviceProfile);
 
         if (onActuateFn) {
-          onActuateFn(DA);
+          onActuateFn.call(device, DA, block, device);
         }
       };
 
@@ -141,13 +142,14 @@ blocktoolApp.factory('BlockService'
           // Loads Devices
           _.each(blockStore.devices, function(deviceOptions) {
 
+            var device = new NinjaService.Device(deviceOptions);
+
             // Try onActuate definition
             if(deviceOptions.hasOwnProperty('onActuateCode')) {
-              var onActuate = new Function("DA", deviceOptions.onActuateCode);
-              deviceOptions.onActuate = this.ConstructOnActuateFn(onActuate, deviceOptions);
+              var onActuate = new Function("DA", "block", "device", deviceOptions.onActuateCode);
+              device.Actuate = this.ConstructOnActuateFn(onActuate, device);
             }
 
-            var device = new NinjaService.Device(deviceOptions);
 
             block.RegisterDevice(device);
           }.bind(this));

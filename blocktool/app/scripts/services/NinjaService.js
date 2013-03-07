@@ -11,7 +11,7 @@ blocktoolApp.service('NinjaService'
 		server: Config.Server,
 		streamServer: Config.StreamServer,
 		// userAccessToken: USER_ACCESS_TOKEN,
-		debug: false
+		debug: true
 	};
 
 	if (Config.UserAccessToken && Config.UserAccessToken.length > 0) {
