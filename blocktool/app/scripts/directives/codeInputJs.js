@@ -12,6 +12,12 @@ blocktoolApp.directive('codeInputJs',
 
       var defaultText = element.text().trim();
       element.empty();
+
+      if (scope.Device && scope.Device.Options.onActuateCode && !attrs.hasOwnProperty("override")) {
+        defaultText = scope.Device.Options.onActuateCode;
+      }
+      defaultText = defaultText.replace(/[ \t]{2,}/mg, '');
+
       /**
        * Setup Code Mirror
        */
@@ -21,6 +27,7 @@ blocktoolApp.directive('codeInputJs',
         theme: "solarized light",
         tabSize: 2,
         lineNumbers: false,
+        lineWrapping: attrs.hasOwnProperty("wrap"),
         readOnly: attrs.hasOwnProperty("readonly")
       };
 

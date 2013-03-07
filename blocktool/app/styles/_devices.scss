@@ -94,6 +94,14 @@
       border-bottom: 1px solid #DEDEDE;
     }
 
+    h6 {
+      font-size: 0.8em;
+    }
+
+    .code {
+      font-size: 10px;
+    }
+
     .remove {
       position: absolute;
       top: 2px;
@@ -109,14 +117,17 @@
       }
     }
 
+    .icon {
+      vertical-align: middle;
+      margin: 0 4px 0 0;
+    }
+
     .status {
       color: hsl(93,65%,39%);
-      top: 4px;
-      margin: 0 4px 0 0;
-      position: relative;
+      
       
       &.offline {
-        color: hsla(70,8%,15%, 0.4);
+        color: hsla(343,52%,32%, 0.4);
       }
     }
 

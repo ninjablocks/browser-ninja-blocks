@@ -10,13 +10,12 @@
         <meta name="description" content=""/>
         <meta name="viewport" content="width=device-width"/>
 
-        <link href="http://fonts.googleapis.com/css?family=Tauri" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="components/angular-ui/build/angular-ui.min.css"/>
         <link rel="stylesheet" href="styles/main.css"/>
         <link rel="stylesheet" href="components/codemirror/lib/codemirror.css"/>
         <link rel="stylesheet" href="components/codemirror/theme/monokai.css"/>
         <link rel="stylesheet" href="components/codemirror/theme/solarized.css"/>
-        <script src="components/foundation/js/vendor/custom.modernizr.js"></script>
+        <script src="/components/foundation/js/vendor/custom.modernizr.js"></script>
 
     </head>
     <body ng-app="blocktoolApp">
@@ -85,9 +84,9 @@
                 <fieldset class="small-12 large-6 columns">
                   <!-- Block -->
                   <div class="row">
-                    <div class="small-5 columns"><label for="" class="inline right">Block</label></div>
+                    <div class="small-5 columns"><label for="deviceBlock" class="inline right">Block</label></div>
                     <div class="small-7 columns">
-                      <select name="" id="" class="small" ng-model="BlockNodeId">
+                      <select name="deviceBlock" id="deviceBlock" class="small" ng-model="BlockNodeId" foundation-select>
                         <option ng-repeat="Block in Blocks" value="{{ Block.Options.nodeId }}">{{ Block.Options.nodeId }}</option>
                       </select>
                     </div>
@@ -146,7 +145,8 @@
                     <p>When this device gets actuated run the following function</p>
                     <pre code-input-js readonly>onActuate: function(DA) {</pre>
                     <div class="code" code-input-js="">
-                      console.log('My Data Value:', DA);
+                      //console.log('My Data Value:', DA);
+                      console.log('Hey')
                     </div>
                     <pre code-input-js readonly>}</pre>
                   </div>
@@ -162,8 +162,8 @@
         <div class="devices row" ng-controller="DevicesCtrl">
           <div class="device radius large-4 columns" ng-repeat="Device in Devices">
             <div class="panel" ng-controller="DeviceCtrl">
-              <h6><span class="status foundicon-star offline" ng-class="{offline:!Device.Options.block.IsListening()}"></span><small>{{ Device.GUID() }}</small></h6>
-              <h5>{{ Device.Options.name }}</h5>
+              <h6><small>{{ Device.GUID() }}</small></h6>
+              <h5><span class="status foundicon-star icon offline" ng-class="{offline:!Device.Options.block.IsListening()}"></span>{{ Device.Options.name }}</h5>
 
               <table>
                 <tr>
@@ -190,11 +190,20 @@
               </table>
       
               <div class="row collapse">
+                <h6><span class="foundicon-up-arrow icon"></span>Emit</h6>
                 <div class="small-9 columns">
                   <input type="text" ng-model="Device.Options.value">
                 </div>
                 <div class="small-3 columns">
-                  <a href="" class="button small" ng-click="Emit()">Emit</a>
+                  <a href="" class="button small radius" ng-click="Emit()">Emit</a>
+                </div>
+              </div>
+              <div class="row collapse">
+                <h6><span class="foundicon-down-arrow icon"></span>Actuate</h6>
+                <div class="code">
+                  <pre code-input-js readonly override>onActuate: function(DA) {</pre>
+                  <div code-input-js code="{{ Device.Options.onActuateCode }}" wrap></div>
+                  <pre code-input-js readonly override>}</pre>
                 </div>
               </div>
               <div class="remove foundicon-remove" ng-click="Remove()"></div>
@@ -210,22 +219,22 @@
 
         <script src="components/jquery/jquery.min.js"></script>
         <script src="components/jquery/jquery-migrate.min.js"></script>
-        <script src="components/foundation/js/vendor/zepto.js"></script>
+        <!-- // <script src="components/foundation/js/vendor/zepto.js"></script> -->
         <script src="scripts/vendor/angular.js"></script>
 
         <!-- build:js scripts/scripts.js -->
         <script src="components/foundation/js/foundation/foundation.js"></script>
         <script src="components/foundation/js/foundation/foundation.alerts.js"></script>
         <script src="components/foundation/js/foundation/foundation.clearing.js"></script>
-        <script src="components/foundation/js/foundation/foundation.cookie.js"></script>
+        <!-- // <script src="components/foundation/js/foundation/foundation.cookie.js"></script> -->
         <script src="components/foundation/js/foundation/foundation.dropdown.js"></script>
         <script src="components/foundation/js/foundation/foundation.forms.js"></script>
-        <script src="components/foundation/js/foundation/foundation.joyride.js"></script>
-        <script src="components/foundation/js/foundation/foundation.magellan.js"></script>
-        <script src="components/foundation/js/foundation/foundation.orbit.js"></script>
-        <script src="components/foundation/js/foundation/foundation.placeholder.js"></script>
-        <script src="components/foundation/js/foundation/foundation.reveal.js"></script>
-        <script src="components/foundation/js/foundation/foundation.section.js"></script>
+        <!-- // <script src="components/foundation/js/foundation/foundation.joyride.js"></script> -->
+        <!-- // <script src="components/foundation/js/foundation/foundation.magellan.js"></script> -->
+        <!-- // <script src="components/foundation/js/foundation/foundation.orbit.js"></script> -->
+        <!-- // <script src="components/foundation/js/foundation/foundation.placeholder.js"></script> -->
+        <!-- // <script src="components/foundation/js/foundation/foundation.reveal.js"></script> -->
+        <!-- // <script src="components/foundation/js/foundation/foundation.section.js"></script> -->
         <script src="components/foundation/js/foundation/foundation.tooltips.js"></script>
         <script src="components/foundation/js/foundation/foundation.topbar.js"></script>
         <script src="components/underscore/underscore-min.js"></script>
@@ -259,8 +268,13 @@
         <script src="scripts/directives/codeInputJs.js"></script>
         <script src="scripts/services/Underscore.js"></script>
         <script src="scripts/services/VendorDevice.js"></script>
+        <script src="scripts/directives/foundationSelect.js"></script>
         <!-- endbuild -->
-
+        <script type="text/javascript">
+          jQuery(document).ready(function() {
+            jQuery(document).foundation();
+          })
+        </script>
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
