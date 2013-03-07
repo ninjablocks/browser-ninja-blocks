@@ -1,9 +1,6 @@
 'use strict';
 
-blocktoolApp.controller('MainCtrl', function($scope) {
-  $scope.awesomeThings = [
-    'HTML5 Boilerplate',
-    'AngularJS',
-    'Testacular'
-  ];
-});
+blocktoolApp.controller('MainCtrl',
+  ['$scope'
+  , function($scope) {
+}]);

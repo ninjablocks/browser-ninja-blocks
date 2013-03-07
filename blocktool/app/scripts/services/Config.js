@@ -39,8 +39,8 @@ blocktoolApp.service('Config'
 
         var configProduction = {
             Mode:               PLATFORMS.PRODUCTION,
-            Server:             '',
-            StreamServer:       ''
+            Server:             'https://api.ninja.is',
+            StreamServer:       'https://streaming.ninja.is'
         };
 
 

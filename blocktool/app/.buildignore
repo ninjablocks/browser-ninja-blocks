@@ -1,6 +1,7 @@
 *.coffee
 components/codemirror/demo
 components/codemirror/doc
+components/codemirror/mode/**/*.html
 components/foundation/test
 components/foundation/docs
 components/foundation/templates
