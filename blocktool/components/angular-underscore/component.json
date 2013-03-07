@@ -1,0 +1,19 @@
+{
+  "name": "angular-underscore",
+  "description": "Underscore adapter for AngularJS.",
+  "version": "0.0.0",
+  "author": {
+    "name": "floydsoft",
+    "email": "floydsoft@gmail.com"
+  },
+  "main": "angular-underscore.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/floydsoft/angular-underscore.git"
+  },
+  "gitHead": "244ca3c99cc1dcc8ac616f639ad27d9bd2520aff",
+  "readme": "# An AngularJS module adapting underscore\n\nThis module exposes underscore's API into angular app's root scope,\nand provides some filters from underscore.\n\n\n## Filters\n\nWhole Underscore's API for Collections, Arrays and Objects except decision API\n(e.g. functions return true|false), side effect guys, and _.range(not making sense as a filter).\n\n\nFor API details please check out http://underscorejs.org/\n\n## How to use\n\n### Install\n\nAfter load angular.js and underscore.js:\n\n```html\n<script type=\"text/javascript\" src=\"angular-underscore.js\"></script>\n```\n\n### Load angular-underscore\n\n#### Load whole stuff\n\n```javascript\nangular.module('yourAwesomeApp', ['angular-underscore']);\n```\n\n#### Load API only\n\n```javascript\nangular.module('yourAwesomeApp', ['angular-underscore/utils']);\n```\n\n#### Load filters only\n\n```javascript\nangular.module('yourAwesomeApp', ['angular-underscore/filters']);\n```\n\n#### Load specific feature only\n\n```javascript\n// load `shuffle` only\nangular.module('yourAwesomeApp', ['angular-underscore/filters/shuffle']);\n```\n\n### Usecase\n\n```html\n<script type=\"text/javascript\">\n  angular.module('example', ['angular-underscore']);\n</script>\n\n<body ng-app=\"example\">\n  <!-- generate 10 unduplicated random number from 0 to 9 -->\n  <div ng-repeat=\"num in range(10)|shuffle\">{{num}}</div>\n</body>\n```\n",
+  "readmeFilename": "README.md",
+  "_id": "angular-underscore@0.3.0",
+  "commit": "244ca3c99cc1dcc8ac616f639ad27d9bd2520aff"
+}

@@ -1,0 +1,20 @@
+/**
+ * Foundation Label extensions
+ */
+
+.green {
+  @include label($label-padding, 10px, hsl(93,42%,56%), false);
+}
+
+.lightgreen {
+  @include label($label-padding, 10px, hsl(93,62%,76%), false);
+}
+
+.orange {
+  @include label($label-padding, $label-font-size, hsl(31,93%,61%), false);
+  border-color: hsl(31,63%,51%);
+  
+  &:hover {
+    background-color: hsl(31,73%,51%);
+  }
+}

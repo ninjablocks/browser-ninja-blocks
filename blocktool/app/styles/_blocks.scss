@@ -1,0 +1,66 @@
+.blocks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+  .block {
+    padding: 10px 10px 20px;
+    margin: 10px;
+    border: 1px solid #DDD;
+    position: relative;
+    @include box-shadow(-1px -1px 0 #FAFAFA, 1px 1px 0px #FFF);
+    @include transition(all 0.1s);
+    @include border-radius(3px);
+    
+    .nodeId {
+      cursor: default;
+      font-size: 1em;
+      margin: 0 0 5px;
+      padding: 0;
+      color: hsl(0,0%,85%);
+      @include text-shadow(-1px -1px 0px hsl(0,0%,70%), 1px 1px 0px #FFF);
+      @include transition(all 0.1s);
+      
+      &::selection {
+        @include text-shadow(none);
+        color: hsl(62,44%,44%);
+        background: hsl(62,64%,54%);
+      }
+    }
+
+    .paired {
+      color: #FFF;
+      @include text-shadow(none);
+      vertical-align: bottom;
+      font-size: 11px;
+      line-height: 12px;
+      position: absolute;
+      display: block;
+      top: 13px;
+      right: 10px;
+      padding: 2px 2px;
+    }
+
+    .remove {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      cursor: pointer;
+      opacity: 0;
+      @include transition(opacity 0.1s);
+    }
+
+    &:hover {
+      border-color: #BABABA;
+      background-color: rgba(0,0,0,0.05);
+      
+      .nodeId {
+        color: #888;  
+      }
+
+      .remove {
+        opacity: 1;
+      }
+    }
+  }
+}

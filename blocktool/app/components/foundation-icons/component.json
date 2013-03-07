@@ -1,0 +1,9 @@
+{
+  "name": "foundation-icons",
+  "version": "0.0.0",
+  "commit": "24cc347a650c1c323e19f2d50f7597aaebd0dc03",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zurb/foundation-icons.git"
+  }
+}

@@ -1,0 +1,14 @@
+.CodeMirror {
+  height: auto;
+  @include box-shadow(none);
+  background: none;
+  
+  .cm-s-solarized.cm-s-light ::selection, .CodeMirror-selected {
+    background: #FFF;
+    border: 1px solid hsla(0, 89%, 50%, 0.3);
+  }
+
+  .cm-tab:before {
+    content: '';
+  }
+}
