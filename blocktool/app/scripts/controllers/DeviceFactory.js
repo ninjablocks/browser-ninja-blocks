@@ -97,7 +97,9 @@ blocktoolApp.controller('DeviceFactoryCtrl',
       
     };
     
-
+    /**
+     * Reset the Device factory
+     */
     $scope.ResetDevice = function() {
       $scope.OnActuate = null;
       $scope.DeviceOptions = {
@@ -110,4 +112,8 @@ blocktoolApp.controller('DeviceFactoryCtrl',
       $scope.BlockNodeId = '';
     };
 
+
+    $rootScope.$on(UIEvents.BlockSelect, function(event, block) {
+      $scope.BlockNodeId = block.Options.nodeId;
+    });
 }]);

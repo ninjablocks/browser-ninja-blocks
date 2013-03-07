@@ -1,8 +1,8 @@
 'use strict';
 
 blocktoolApp.controller('BlocksCtrl'
-  , ['$scope', 'Utils', 'BlockService'
-  , function($scope, Utils, BlockService) {
+  , ['$rootScope', '$scope', 'Utils', 'BlockService', 'UIEvents'
+  , function($rootScope, $scope, Utils, BlockService, UIEvents) {
 
     /**
      * Blocks array
@@ -10,6 +10,12 @@ blocktoolApp.controller('BlocksCtrl'
      */
     $scope.Blocks = [];
 
+
+    /**
+     * Currently Selected Block
+     * @type {[type]}
+     */
+    $scope.SelectedBlock = null;
 
     /**
      * Creates a new block
@@ -21,7 +27,9 @@ blocktoolApp.controller('BlocksCtrl'
 
     };
 
-    
+    /**
+     * Saves the Blocks to Local Storage
+     */
     $scope.SaveBlocks = function() {
       BlockService.StoreBlocks();
     };
@@ -33,5 +41,10 @@ blocktoolApp.controller('BlocksCtrl'
       $scope.Blocks = BlockService.Blocks;
     });
 
+
+    $scope.SelectBlock = function(block) {
+      $rootScope.$broadcast(UIEvents.BlockSelect, block);
+      $scope.SelectedBlock = block;
+    };
 
 }]);

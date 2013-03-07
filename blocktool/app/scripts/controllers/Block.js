@@ -5,7 +5,14 @@ blocktoolApp.controller('BlockCtrl'
   , function($rootScope, $scope, console, UIEvents, BlockService) {
 
 
-
+  /**
+   * Is this block selected in the UI
+   */
+  $scope.IsSelected = function() {
+    if ($scope.SelectedBlock) {
+      return ($scope.SelectedBlock.Options.nodeId === $scope.Block.Options.nodeId);
+    }
+  };
 
 
   /**

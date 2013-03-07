@@ -58,7 +58,7 @@
             <div class="content">
               <h5>Block Factory</h5>
               <div class="blocks">
-                  <div class="block" ng-repeat="Block in Blocks" ng-controller="BlockCtrl">
+                  <div class="block" ng-repeat="Block in Blocks" ng-controller="BlockCtrl" ng-click="SelectBlock(Block)" ng-class="{selected:IsSelected()}">
                     <h5 class="nodeId" select-on-click>{{ Block.Options.nodeId }} </h5>
                     <span class="paired label lightgreen radius" ui-if="IsActivated()">Paired</span>
                     <a class="button tiny radius alert" ng-click="Activate()" ui-if="!IsActivated()">Activate</a>
@@ -84,17 +84,15 @@
                 <fieldset class="small-12 large-6 columns">
                   <!-- Block -->
                   <div class="row">
-                    <div class="small-5 columns"><label for="deviceBlock" class="inline right">Block</label></div>
+                    <div class="small-5 columns"><label for="deviceBlock" class="inline right">Block:</label></div>
                     <div class="small-7 columns">
-                      <select name="deviceBlock" id="deviceBlock" class="small" ng-model="BlockNodeId" foundation-select>
-                        <option ng-repeat="Block in Blocks" value="{{ Block.Options.nodeId }}">{{ Block.Options.nodeId }}</option>
-                      </select>
+                      <span class="label radius tiny" ng-class="{alert:!BlockNodeId}"><strong>{{ BlockNodeId }}</strong></span>
                     </div>
                   </div>
 
                   <!-- Device Type -->
                   <div class="row">
-                    <div class="small-5 columns"><label for="deviceType" class="inline right">Type</label></div>
+                    <div class="small-5 columns"><label for="deviceType" class="inline right">Type:</label></div>
                     <div class="small-7 columns">
                       <select name="deviceType" id="deviceType" class="small" ng-model="DeviceOptions.type">
                         <option value="">- Select -</option>
@@ -105,7 +103,7 @@
 
                   <!-- Name -->
                   <div class="row">
-                    <div class="small-5 columns"><label for="deviceName" class="inline right">Short Name</label></div>
+                    <div class="small-5 columns"><label for="deviceName" class="inline right">Short Name:</label></div>
                     <div class="small-7 columns"><input type="text" name="deviceName" id="deviceName" ng-model="DeviceOptions.name" select-on-click></div>
                   </div>
 
@@ -114,19 +112,19 @@
                 <fieldset class="small-12 large-6 columns">
                   <!-- Device Id -->
                   <div class="row">
-                    <div class="small-5 columns"><label for="deviceId" class="inline right">Device Id</label></div>
+                    <div class="small-5 columns"><label for="deviceId" class="inline right">Device Id:</label></div>
                     <div class="small-7 columns"><input type="text" name="deviceId" id="deviceId" ng-model="DeviceOptions.deviceId" placeholder="Device Id" select-on-click></div>
                   </div>
 
                   <!-- Vendor -->
                   <div class="row">
-                    <div class="small-5 columns"><label for="deviceVendor" class="inline right">Vendor</label></div>
+                    <div class="small-5 columns"><label for="deviceVendor" class="inline right">Vendor:</label></div>
                     <div class="small-7 columns"><input type="text" name="deviceVendor" id="deviceVendor" ng-model="DeviceOptions.vendor" placeholder="Vendor Id" select-on-click></div>
                   </div>
 
                   <!-- Port -->
                   <div class="row">
-                    <div class="small-5 columns"><label for="devicePort" class="inline right">Port</label></div>
+                    <div class="small-5 columns"><label for="devicePort" class="inline right">Port:</label></div>
                     <div class="small-7 columns"><input type="text" name="devicePort" id="devicePort" ng-model="DeviceOptions.port" placeholder="Port" select-on-click></div>
                   </div>
 
@@ -146,7 +144,6 @@
                     <pre code-input-js readonly>onActuate: function(DA) {</pre>
                     <div class="code" code-input-js="">
                       //console.log('My Data Value:', DA);
-                      console.log('Hey')
                     </div>
                     <pre code-input-js readonly>}</pre>
                   </div>
@@ -268,7 +265,6 @@
         <script src="scripts/directives/codeInputJs.js"></script>
         <script src="scripts/services/Underscore.js"></script>
         <script src="scripts/services/VendorDevice.js"></script>
-        <script src="scripts/directives/foundationSelect.js"></script>
         <!-- endbuild -->
         <script type="text/javascript">
           jQuery(document).ready(function() {
