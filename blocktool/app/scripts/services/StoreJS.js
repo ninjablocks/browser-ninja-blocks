@@ -1,6 +1,6 @@
 'use strict';
 
-devicetoolApp.factory('StoreJS',
+blocktoolApp.factory('StoreJS',
   ['$window', function($window) {
 
   var store = $window.store;

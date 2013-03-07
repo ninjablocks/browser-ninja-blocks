@@ -1,6 +1,6 @@
 'use strict';
 
-devicetoolApp.factory('Underscore',
+blocktoolApp.factory('Underscore',
   ['$window',
    function($window) {
 

@@ -19,7 +19,7 @@
         <script src="components/foundation/js/vendor/custom.modernizr.js"></script>
 
     </head>
-    <body ng-app="devicetoolApp">
+    <body ng-app="blocktoolApp">
 
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
@@ -163,7 +163,7 @@
           <div class="device radius large-4 columns" ng-repeat="Device in Devices">
             <div class="panel" ng-controller="DeviceCtrl">
               <h6><span class="status foundicon-star offline" ng-class="{offline:!Device.Options.block.IsListening()}"></span><small>{{ Device.GUID() }}</small></h6>
-              <h5>{{ Device.Options.shortName }}</h5>
+              <h5>{{ Device.Options.name }}</h5>
 
               <table>
                 <tr>
@@ -258,6 +258,7 @@
         <script src="scripts/controllers/Device.js"></script>
         <script src="scripts/directives/codeInputJs.js"></script>
         <script src="scripts/services/Underscore.js"></script>
+        <script src="scripts/services/VendorDevice.js"></script>
         <!-- endbuild -->
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

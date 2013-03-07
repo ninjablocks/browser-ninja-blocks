@@ -1,6 +1,6 @@
 'use strict';
 
-devicetoolApp.factory('Console'
+blocktoolApp.factory('Console'
   , ['$window'
   , function(window) {
 

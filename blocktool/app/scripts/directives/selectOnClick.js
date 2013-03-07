@@ -1,6 +1,6 @@
 'use strict';
 
-devicetoolApp.directive('selectOnClick',
+blocktoolApp.directive('selectOnClick',
   [ '$window'
   , function(window) {
   return {

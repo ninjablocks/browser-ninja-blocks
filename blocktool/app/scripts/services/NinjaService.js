@@ -3,7 +3,7 @@
 /**
  * Main Ninja Blocks factory.
  */
-devicetoolApp.service('NinjaService'
+blocktoolApp.service('NinjaService'
 	,['Config'
 	, function(Config) {
 

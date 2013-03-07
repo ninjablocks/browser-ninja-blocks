@@ -1,6 +1,6 @@
 'use strict';
 
-devicetoolApp.directive('codeInputJs',
+blocktoolApp.directive('codeInputJs',
   ['$rootScope', 'UIEvents'
   , function($rootScope, UIEvents) {
 

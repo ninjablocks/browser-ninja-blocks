@@ -1,6 +1,6 @@
 'use strict';
 
-devicetoolApp.controller('BlockCtrl'
+blocktoolApp.controller('BlockCtrl'
   , ['$rootScope', '$scope', 'Console', 'UIEvents', 'BlockService'
   , function($rootScope, $scope, console, UIEvents, BlockService) {
 

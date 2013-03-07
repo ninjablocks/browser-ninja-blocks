@@ -1,6 +1,6 @@
 'use strict';
 
-devicetoolApp.service('Config'
+blocktoolApp.service('Config'
     , ['$rootScope', '$location'
     , function($rootScope, $location) {
 

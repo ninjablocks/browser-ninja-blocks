@@ -13,4 +13,4 @@ SELECT
                CONCAT(",has_time_series:'",has_time_series,"'"),
                CONCAT(",has_subdevice_count:'",has_subdevice_count,"'}")
           )
-     ,"]") AS json FROM vendor_devices LIMIT 1000;
+     ,"]") AS json FROM vendor_devices

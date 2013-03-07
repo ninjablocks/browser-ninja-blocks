@@ -1,6 +1,6 @@
 'use strict';
 
-devicetoolApp.controller('DeviceFactoryCtrl',
+blocktoolApp.controller('DeviceFactoryCtrl',
   ['$rootScope', '$scope', 'NinjaService', 'NinjaUtilities', 'BlockService', 'UIEvents', 'Underscore'
   , function($rootScope, $scope, NinjaService, NinjaUtilities, BlockService, UIEvents, _) {
 

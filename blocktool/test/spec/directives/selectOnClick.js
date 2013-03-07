@@ -1,7 +1,7 @@
 'use strict';
 
 describe('Directive: selectOnClick', function() {
-  beforeEach(module('devicetoolApp'));
+  beforeEach(module('blocktoolApp'));
 
   var element;
 

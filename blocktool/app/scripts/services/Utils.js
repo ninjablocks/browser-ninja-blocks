@@ -1,6 +1,6 @@
 'use strict';
 
-devicetoolApp.factory('Utils'
+blocktoolApp.factory('Utils'
   , ['StoreJS', function(store) {
 
   // Public API here

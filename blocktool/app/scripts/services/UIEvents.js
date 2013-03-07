@@ -1,6 +1,6 @@
 'use strict';
 
-devicetoolApp.service('UIEvents', function() {
+blocktoolApp.service('UIEvents', function() {
 
     var uiEvents = {
 

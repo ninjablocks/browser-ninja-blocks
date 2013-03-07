@@ -3,7 +3,7 @@
 /**
  * Ninja Blocks User factory
  */
-devicetoolApp.factory('UserService'
+blocktoolApp.factory('UserService'
 	, ['$rootScope', '$q', '$http', 'Config', 'UIEvents', 'NinjaService'
 	, function($rootScope, $q, $http, Config, UIEvents, NinjaService) {
 

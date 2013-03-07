@@ -1,7 +1,7 @@
 'use strict';
 
 
-devicetoolApp.service('NinjaUtilities'
+blocktoolApp.service('NinjaUtilities'
 	, function() {
 	return Ninja.Utilities;
 });

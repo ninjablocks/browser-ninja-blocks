@@ -3,7 +3,7 @@
 describe('Controller: BlockCtrl', function() {
 
   // load the controller's module
-  beforeEach(module('devicetoolApp'));
+  beforeEach(module('blocktoolApp'));
 
   var BlockCtrl,
     scope;

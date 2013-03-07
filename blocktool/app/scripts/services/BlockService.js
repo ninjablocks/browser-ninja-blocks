@@ -1,6 +1,6 @@
 'use strict';
 
-devicetoolApp.factory('BlockService'
+blocktoolApp.factory('BlockService'
   , ['$rootScope', 'Utils', 'UIEvents', 'NinjaService', 'StoreJS', 'Console', 'Underscore'
   , function($rootScope, Utils, UIEvents, NinjaService, store, console, _) {
   

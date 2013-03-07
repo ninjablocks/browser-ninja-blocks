@@ -1,7 +1,7 @@
 'use strict';
 
 describe('Directive: codeInputJs', function() {
-  beforeEach(module('devicetoolApp'));
+  beforeEach(module('blocktoolApp'));
 
   var element;
 

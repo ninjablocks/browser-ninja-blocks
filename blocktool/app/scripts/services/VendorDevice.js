@@ -1,4 +1,8 @@
-{
+'use strict';
+
+blocktoolApp.factory('VendorDevice', function() {
+
+  var data = {
   "data":
   [
     {
@@ -1262,4 +1266,8 @@
       "system": null
     }
   ]
-}
+};
+
+  return data;
+
+});
