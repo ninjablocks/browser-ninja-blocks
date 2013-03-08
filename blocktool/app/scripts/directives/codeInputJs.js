@@ -21,7 +21,7 @@ blocktoolApp.directive('codeInputJs',
       if (scope.Device && scope.Device.Options.onActuateCode && !attrs.hasOwnProperty("override")) {
         defaultText = scope.Device.Options.onActuateCode;
       }
-      defaultText = defaultText.replace(/[ \t]{2,}/mg, '');
+      defaultText = defaultText.replace(/[ \t]{2,}/g, ' ');
 
       /**
        * Setup Code Mirror
@@ -41,7 +41,7 @@ blocktoolApp.directive('codeInputJs',
       var textArea = codeMirror.getInputField();
 
       codeMirror.on("change", function(instance, changeObj) {
-        var code = instance.getValue(" ");
+        var code = instance.getValue("\n");
         scope.OnActuateCode = code;
       });
 
