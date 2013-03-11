@@ -29,6 +29,10 @@ blocktoolApp.controller('BlockCtrl'
     $scope.Block.Stop();
   };
 
+
+  /**
+   * Check if the Block is listening
+   */
   $scope.IsListening = function() {
     return ($scope.Block.IsListening());
   };
@@ -63,6 +67,19 @@ blocktoolApp.controller('BlockCtrl'
   $scope.Remove = function() {
     BlockService.RemoveBlock($scope.Block);
   };
+
+
+  /**
+   * Listen for server ServerSwitch
+   */
+  $rootScope.$on(UIEvents.ServerSwitch, function(event, server ) {
+    console.log("[Block]:", $scope.Block.Options);
+    if ($scope.Block.hasOwnProperty("Tokens") && $scope.Block.Tokens.hasOwnProperty(server.Id)) {
+      $scope.Block.Options.token = $scope.Block.Tokens[server.Id];
+    } else {
+      $scope.Block.Options.token = undefined;
+    }
+  });
 
 
 

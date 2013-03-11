@@ -1,0 +1,61 @@
+/* This controls padding around the buttons. Use a variable or em value */
+$padding: $button-med;
+
+/* This controls button color. Set to one of our variables or a custom hex value */
+$bg: $primary-color;
+
+/* This controls button radius. Set to a variable, true/false, or custom px value */
+$radius: false;
+
+/* This whether button is full-width. Set to true or false */
+$full-width: false;
+
+/* This controls whether disabled styles are used. Set to true or false */
+$disabled: false;
+
+/* This controls padding for inputs, they are a little different */
+$is-input: false;
+
+
+.button {
+  
+  &.cyan {
+    background: hsl(184,69%,65%);
+    border-color: hsl(184,49%,55%);
+    
+    &:hover {
+      background-color: hsl(184,49%,55%);
+    }
+  }
+
+  &.green {
+    background: hsl(83,76%,53%);
+    border-color: hsl(83,56%,43%);
+    color: hsl(83,26%,23%);
+    
+    &:hover {
+      background-color: hsl(83,56%,43%);
+    }
+  }
+
+  &.yellow {
+    background: hsl(54,70%,68%);
+    border-color: hsl(54,50%,58%);
+    color: hsl(54,30%,28%);
+    
+    &:hover {
+      background-color: hsl(54,50%,58%);;
+    }
+  }
+
+  &.orange {
+    background: hsl(31,93%,61%);
+    border-color: hsl(31,63%,51%);
+    
+    &:hover {
+      background-color: hsl(31,73%,51%);
+    }
+  }
+
+
+}

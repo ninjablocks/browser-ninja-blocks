@@ -35,7 +35,6 @@
               <li class="name">
                 <h1>
                   <a href="">Browser Block Tool</a>
-                  <small>Localhost</small>
                 </h1>
               </li>
               <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
@@ -56,6 +55,22 @@
 
           <!-- BLOCKS CONTROLLER -->
           <section class="large-4 columns" ng-controller="BlocksCtrl">
+            <div class="content server" ng-controller="ServerCtrl">
+              <h5>0. Server</h5>
+              <div class="row">
+                <div class="large-4 small-4 columns">
+                  <a href="" ng-click="SelectServer('localhost')" class="button small secondary inline" ng-class="{green:IsSelected('localhost'), selected:IsSelected('localhost')}">Localhost</a>
+                </div>
+                <div class="large-4 small-4 columns">
+                  <a href="" ng-click="SelectServer('staging')" class="button small secondary inline" ng-class="{yellow:IsSelected('staging'),
+                  selected:IsSelected('staging')}">Staging</a>
+                </div>
+                <div class="large-4 small-4 columns">
+                  <a href="" ng-click="SelectServer('production')" class="button small secondary inline" ng-class="{alert:IsSelected('production'), selected:IsSelected('production')}">Production</a>
+                </div>
+              </div>
+            </div>
+
 
             <div class="content">
               <h5>1. Block Factory</h5>
@@ -68,7 +83,8 @@
                     <a class="button tiny radius alert" ng-click="StopListening()" ui-if="IsActivated() && IsListening()">Stop Listening</a>
 
                     <small>Devices: {{ Block.Devices.length }}</small>
-
+                    <br>
+                    <small>{{ Block.ServerUrl() }}</small>
                     <div class="remove foundicon-remove" ng-click="Remove()"></div>
                   </div>
               </div>
@@ -258,18 +274,20 @@
         <script src="scripts/services/BlockService.js"></script>
         <script src="scripts/services/UIEvents.js"></script>
         <script src="scripts/services/Debug.js"></script>
+        <script src="scripts/services/ServerService.js"></script>
+        <script src="scripts/services/Underscore.js"></script>
+        <script src="scripts/services/VendorDevice.js"></script>
 
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/Blocks.js"></script>
         <script src="scripts/controllers/Block.js"></script>
         <script src="scripts/controllers/DeviceFactory.js"></script>
         <script src="scripts/controllers/Devices.js"></script>
+        <script src="scripts/controllers/Server.js"></script>
+        <script src="scripts/controllers/Device.js"></script>
 
         <script src="scripts/directives/selectOnClick.js"></script>
-        <script src="scripts/controllers/Device.js"></script>
         <script src="scripts/directives/codeInputJs.js"></script>
-        <script src="scripts/services/Underscore.js"></script>
-        <script src="scripts/services/VendorDevice.js"></script>
         <!-- endbuild -->
         <script type="text/javascript">
           jQuery(document).ready(function() {

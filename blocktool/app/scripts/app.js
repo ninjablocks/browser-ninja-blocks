@@ -13,9 +13,10 @@ var blocktoolApp = angular.module('blocktoolApp', ['angular-underscore', 'ui'])
   }]);
 
 
-blocktoolApp.run(['Utils', 'Console', 'NinjaService', 'BlockService'
-  , function(Utils, console, NinjaService, BlockService) {
+blocktoolApp.run(['$rootScope', 'Utils', 'UIEvents', 'Console', 'NinjaService', 'BlockService'
+  , function($rootScope, Utils, UIEvents, console, NinjaService, BlockService) {
 
-    BlockService.LoadBlocks();
+    // Initiate Blocks to load
+    $rootScope.$broadcast(UIEvents.LoadBlocks);
 
   }]);

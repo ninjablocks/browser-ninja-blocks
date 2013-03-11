@@ -71,23 +71,4 @@ blocktoolApp.service('Config'
             return platform;
         };
 
-
-        switch (detectPlatform()) {
-            case PLATFORMS.YEOMAN:
-                return configYeoman;
-                break;
-            case PLATFORMS.LOCALHOST:
-                return configDev;
-                break;
-            case PLATFORMS.DERP:
-                return configDerp;
-                break;
-            case PLATFORMS.STAGING:
-                return configStaging;
-                break;
-            case PLATFORMS.PRODUCTION:
-                return configProduction;
-                break;
-        }
-
 }]);

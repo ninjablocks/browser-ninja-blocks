@@ -4,23 +4,25 @@
  * Main Ninja Blocks factory.
  */
 blocktoolApp.service('NinjaService'
-	,['Config'
-	, function(Config) {
+  ,['$rootScope', 'ServerService', 'UIEvents'
+  , function($rootScope, ServerService, UIEvents) {
 
-	var ninjaOptions = {
-		server: Config.Server,
-		streamServer: Config.StreamServer,
-		// userAccessToken: USER_ACCESS_TOKEN,
-		debug: true
-	};
+    ServerService.DetectPlatform();
 
-	if (Config.UserAccessToken && Config.UserAccessToken.length > 0) {
-		ninjaOptions.userAccessToken = Config.UserAccessToken;
-	}
+    var ninjaOptions = {
+      server: ServerService.Current.Server,
+      streamServer: ServerService.Current.StreamServer,
+      debug: true
+    };
+
+    var ninja = new Ninja(ninjaOptions);
+
+    $rootScope.$on(UIEvents.ServerSwitch, function(event) {
+      ninja.Options.server = ServerService.Current.Server;
+      ninja.Options.streamServer = ServerService.Current.StreamServer;
+    });
 
 
-	var ninja = new Ninja(ninjaOptions);
-
-	return ninja;
+    return ninja;
 
 }]);

@@ -1,0 +1,17 @@
+
+.server {
+  .columns {
+    padding: 2px;
+    
+    .button { 
+      display: block;
+      text-align: center;
+      padding-left: 0px;
+      padding-right: 0px;
+      
+      &.selected {
+        font-weight: bold;
+      }
+    }
+  }
+}
