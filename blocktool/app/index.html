@@ -174,8 +174,8 @@
 
         <!-- DEVICES -->
         <div class="row"><div class="large-12 columns"><h5>Devices</h5></div></div>
-        <div class="devices row" ng-controller="DevicesCtrl">
-          <div id="{{ Device.GUID() }}" class="device radius large-4 columns" ng-repeat="Device in Devices">
+        <div class="devices row" ng-controller="DevicesCtrl" isotope-devices>
+          <div id="{{ Device.GUID() }}" class="device radius large-4 small-6 columns" ng-repeat="Device in Devices">
             <div class="panel" ng-controller="DeviceCtrl">
               <h6><small>{{ Device.GUID() }}</small></h6>
               <h5><span class="status foundicon-star icon offline" ng-class="{offline:!Device.Options.block.IsListening()}"></span>{{ Device.Options.name }}</h5>
@@ -236,6 +236,7 @@
         <script src="components/jquery/jquery.min.js"></script>
         <script src="components/jquery/jquery-migrate.min.js"></script>
         <script src="components/underscore/underscore-min.js"></script>
+        <script src="components/isotope/jquery.isotope.min.js"></script>
 
         <script src="scripts/vendor/angular.js"></script>
         <script src="components/angular-underscore/angular-underscore.js"></script>
@@ -261,7 +262,7 @@
         <script src="components/foundation/js/foundation/foundation.tooltips.js"></script>
         <script src="components/foundation/js/foundation/foundation.topbar.js"></script>
         <script src="components/store.js/store.min.js"></script>
-        
+
         <script src="scripts/lib/ninja.js"></script>
 
         <script src="scripts/app.js"></script>
@@ -288,6 +289,7 @@
 
         <script src="scripts/directives/selectOnClick.js"></script>
         <script src="scripts/directives/codeInputJs.js"></script>
+        <script src="scripts/directives/isotopeDevices.js"></script>
         <!-- endbuild -->
         <script type="text/javascript">
           jQuery(document).ready(function() {

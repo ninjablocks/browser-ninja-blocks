@@ -48,6 +48,7 @@
   
   .device {
     padding: 0.5em;
+    @include transition(all 0.5s);
     
     .panel {
       background: hsla(0,0%,98%, 0.3);

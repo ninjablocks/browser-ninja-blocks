@@ -14,7 +14,11 @@ blocktoolApp.service('UIEvents', function() {
 
         OnActuateUpdated:           'OnActuateUpdated',
 
-        ServerSwitch:               'ServerSwitch'
+        ServerSwitch:               'ServerSwitch',
+
+        IsotopeDeviceRemove:        'IsotopeDeviceRemove',
+        IsotopeDeviceAdd:           'IsotopeDeviceAdd',
+        IsotopeReLayout:            'IsotopeReLayout'
 
     };
 
