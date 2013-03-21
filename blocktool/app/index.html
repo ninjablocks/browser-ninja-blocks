@@ -58,14 +58,14 @@
             <div class="content server" ng-controller="ServerCtrl">
               <h5>0. Server</h5>
               <div class="row">
-                <div class="large-4 small-4 columns">
+                <div class="large-6 small-6 columns">
                   <a href="" ng-click="SelectServer('localhost')" class="button small secondary inline" ng-class="{green:IsSelected('localhost'), selected:IsSelected('localhost')}">Localhost</a>
                 </div>
-                <div class="large-4 small-4 columns">
+                <!-- <div class="large-4 small-4 columns">
                   <a href="" ng-click="SelectServer('staging')" class="button small secondary inline" ng-class="{yellow:IsSelected('staging'),
                   selected:IsSelected('staging')}">Staging</a>
-                </div>
-                <div class="large-4 small-4 columns">
+                </div> -->
+                <div class="large-6 small-6 columns">
                   <a href="" ng-click="SelectServer('production')" class="button small secondary inline" ng-class="{alert:IsSelected('production'), selected:IsSelected('production')}">Production</a>
                 </div>
               </div>
@@ -174,7 +174,7 @@
 
         <!-- DEVICES -->
         <div class="row"><div class="large-12 columns"><h5>Devices</h5></div></div>
-        <div class="devices row" ng-controller="DevicesCtrl" isotope-devices>
+        <div class="devices row" ng-controller="DevicesCtrl">
           <div id="{{ Device.GUID() }}" class="device radius large-4 small-6 columns" ng-repeat="Device in Devices">
             <div class="panel" ng-controller="DeviceCtrl">
               <h6><small>{{ Device.GUID() }}</small></h6>
@@ -204,16 +204,24 @@
 
               </table>
       
-              <div class="row collapse">
+              <div class="row emit collapse">
                 <h6><span class="foundicon-up-arrow icon"></span>Emit</h6>
+                <form class="custom emitJson">
+                  <label for="emitJson" ng-click="ToggleEmitMode()">
+                    <input type="checkbox" id="emitJson" name="emitJson" style="display: none">
+                    <span class="custom checkbox"></span>
+                    JSON Stringify      
+                  </label>
+                </form>
                 <div class="small-9 columns">
-                  <input type="text" ng-model="Device.Options.value">
+                  <input type="text" ng-model="Device.Options.value" ng-show="IsEmitMode(EMITMODES.STRING)">
+                  <textarea ng-model="Device.Options.value" ng-show="IsEmitMode(EMITMODES.JSON)"></textarea>
                 </div>
                 <div class="small-3 columns">
                   <a href="" class="button small radius secondary" ng-click="Emit()">Emit</a>
                 </div>
               </div>
-              <div class="row collapse">
+              <div class="row actuate collapse">
                 <h6><span class="foundicon-down-arrow icon"></span>Actuate</h6>
                 <div class="code">
                   <pre code-input-js readonly override>onActuate: function(DA, block, device) {</pre>

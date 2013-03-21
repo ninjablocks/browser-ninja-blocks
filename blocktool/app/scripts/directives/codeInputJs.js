@@ -7,7 +7,7 @@ blocktoolApp.directive('codeInputJs',
   return {
     restrict: 'A',
     link: function postLink(scope, element, attrs) {
-      console.log("[CodeMirror]: Creating...");
+      // console.log("[CodeMirror]: Creating...");
       element.addClass("codeInput");
 
       if (attrs.hasOwnProperty("indented")) {

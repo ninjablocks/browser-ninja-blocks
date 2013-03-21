@@ -77,6 +77,27 @@
       font-size: 0.8em;
     }
 
+    .emit, .actuate {
+      position: relative;
+    }
+
+    .emitJson {
+      display: block;
+      position: absolute;
+      top: 0px;
+      right: 10px;
+      
+      label {
+        font-size: 10px;
+      }
+    }
+
+    textarea {
+      min-height: 100px;
+      font-family: Menlo, Monaco, 'Andale Mono', 'lucida console', 'Courier New', monospace;
+      font-size: 10px;
+    }
+
     .code {
       font-size: 10px;
     }

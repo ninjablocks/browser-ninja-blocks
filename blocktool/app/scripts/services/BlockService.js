@@ -28,7 +28,7 @@ blocktoolApp.factory('BlockService'
         return devices;
       }, devices);
 
-      console.log("[Devices]:", devices);
+      // console.log("[Devices]:", devices);
 
       return devices;
     },
@@ -161,7 +161,7 @@ blocktoolApp.factory('BlockService'
             block.Tokens = {};
           }
 
-          console.log("[Store]: Parsing Block", blockStore, block);
+          // console.log("[Store]: Parsing Block", blockStore, block);
 
           // Loads Devices
           _.each(blockStore.devices, function(deviceOptions) {

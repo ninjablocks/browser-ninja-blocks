@@ -5,13 +5,44 @@ blocktoolApp.controller('DeviceCtrl',
   , function($rootScope, $scope, console, UIEvents, BlockService) {
 
 
+    $scope.EMITMODES = {
+      STRING: 0,
+      JSON: 1
+    };
+
     $scope.OnActuateCode = $scope.Device.Options.onActuateCode;
+
+    $scope.EmitMode = $scope.EMITMODES.STRING;
 
     /**
      * Emit a data value for the device
      */
     $scope.Emit = function() {
-      $scope.Device.Emit($scope.Device.Options.value);
+      var emitData = $scope.Device.Options.value;
+      if ($scope.EmitMode === $scope.EMITMODES.JSON) {
+        emitData = JSON.stringify(emitData);
+      }
+      $scope.Device.Emit(emitData);
+    };
+
+
+    /**
+     * Toggles the emit mode
+     */
+    $scope.ToggleEmitMode = function() {
+      if ($scope.EmitMode == $scope.EMITMODES.STRING) {
+        $scope.EmitMode = $scope.EMITMODES.JSON;
+      } else {
+        $scope.EmitMode = $scope.EMITMODES.STRING;
+      }
+    };
+
+    /**
+     * Tests the emit mode with specified mode
+     * @param {EMITMODES} mode Mode to test
+     */
+    $scope.IsEmitMode = function(mode) {
+      return ($scope.EmitMode === mode);
     };
 
 
