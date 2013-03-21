@@ -1081,7 +1081,8 @@ var Ninja = function(options) {
       this.Options.name = response.default_name;
 
       // Don't set blocks for network device
-      if (this.Options.type !== 'network' && this.Options.deviceId !== 1005) {        var block = new ninja.Block({nodeId: response.node});
+      if (this.Options.type !== 'network' && this.Options.deviceId !== 1005) {
+        var block = new ninja.Block({nodeId: response.node});
         this.Options.block = block;
       }
 
@@ -1136,8 +1137,8 @@ var Ninja = function(options) {
 
         data = {
           G: this.Options.port.toString(),
-          V: this.Options.vendor.toString(),
-          D: this.Options.deviceId,
+          V: parseInt(this.Options.vendor, 10),
+          D: parseInt(this.Options.deviceId, 10),
           DA: data
         };
 
