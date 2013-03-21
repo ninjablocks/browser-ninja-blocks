@@ -94,8 +94,6 @@ blocktoolApp.controller('DeviceFactoryCtrl',
 
       $rootScope.$broadcast(UIEvents.DeviceCreated, device);
 
-      $scope.ResetDevice();
-      
     };
     
     /**

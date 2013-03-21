@@ -148,8 +148,9 @@
 
                   <!-- Create -->
                   <div class="row">
-                    <div class="small-7 small-offset-4 columns">
-                      <a href="" class="button small radius success" ng-click="CreateDevice()">Create Device</a>
+                    <div class="small-9 small-offset-3 columns">
+                      <a class="button small radius success" ng-click="CreateDevice()">Create Device</a>
+                      <a class="button small radius alert" ng-click="ResetDevice()">Reset</a>
                     </div>
                   </div>
                 </fieldset>
@@ -210,7 +211,7 @@
                   <label for="emitJson" ng-click="ToggleEmitMode()">
                     <input type="checkbox" id="emitJson" name="emitJson" style="display: none">
                     <span class="custom checkbox"></span>
-                    JSON Stringify      
+                    Multiline
                   </label>
                 </form>
                 <div class="small-9 columns">
