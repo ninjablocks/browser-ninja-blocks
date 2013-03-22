@@ -73,7 +73,7 @@ blocktoolApp.controller('BlockCtrl'
    * Listen for server ServerSwitch
    */
   $rootScope.$on(UIEvents.ServerSwitch, function(event, server ) {
-    console.log("[Block]:", $scope.Block.Options);
+    // console.log("[Block]:", $scope.Block.Options);
     if ($scope.Block.hasOwnProperty("Tokens") && $scope.Block.Tokens.hasOwnProperty(server.Id)) {
       $scope.Block.Options.token = $scope.Block.Tokens[server.Id];
     } else {

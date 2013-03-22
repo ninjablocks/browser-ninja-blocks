@@ -56,7 +56,7 @@
           <!-- BLOCKS CONTROLLER -->
           <section class="large-4 columns" ng-controller="BlocksCtrl">
             <div class="content server" ng-controller="ServerCtrl">
-              <h5>0. Server</h5>
+              <h5><span data-tooltip class="has-tip tip-right" title="Select the Ninja server ">0. Server</span></h5>
               <div class="row">
                 <div class="large-6 small-6 columns">
                   <a href="" ng-click="SelectServer('localhost')" class="button small secondary inline" ng-class="{green:IsSelected('localhost'), selected:IsSelected('localhost')}">Localhost</a>
@@ -96,13 +96,13 @@
           <!-- DEVICES CONTROLLER -->
           <section class="large-8 columns" ng-controller="DeviceFactoryCtrl">
             <div class="content">
-              <h5>2. Device Factory</h5>
+              <h5><span data-tooltip class="has-tip" title="Create virtual devices with this factory">2. Device Factory</span></h5>
               <form class="factory custom row">
 
                 <fieldset class="small-12 large-6 columns">
                   <!-- Block -->
                   <div class="row">
-                    <div class="small-5 columns"><label for="deviceBlock" class="inline right">Block:</label></div>
+                    <div class="small-5 columns"><label for="deviceBlock" class="inline right"><span data-tooltip class="has-tip tip-left" title="Select a Block from the Block Factory">Block:</span></label></div>
                     <div class="small-7 columns">
                       <span class="label radius tiny" ng-class="{alert:!BlockNodeId}"><strong select-on-click>{{ BlockNodeId }}</strong></span>
                     </div>
@@ -110,12 +110,21 @@
 
                   <!-- Device Type -->
                   <div class="row">
-                    <div class="small-5 columns"><label for="deviceType" class="inline right">Type:</label></div>
+                    <div class="small-5 columns"><label for="deviceSelectId" class="inline right">Device:</label></div>
                     <div class="small-7 columns">
-                      <select name="deviceType" id="deviceType" class="small" ng-model="DeviceOptions.type" foundation-select>
+                      <select name="deviceSelectId" id="deviceSelectId" class="medium" ng-model="DeviceOptions.deviceId" foundation-select>
                         <option value="">- Select -</option>
-                        <option ng-repeat="Type in Types" value="{{ Type }}">{{ Type }}</option>
+                        <option ng-repeat="Device in Devices" value="{{ Device.did }}">{{ Device.device_type }}: {{ Device.default_name }} ({{ Device.did }})</option>
                       </select>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="small-5 columns">
+                      <label for="deviceType" class="inline right">Type:</label>
+                    </div>
+                    <div class="small-7 columns">
+                      <input type="text" name="deviceType" id="deviceType" ng-model="DeviceOptions.type" select-on-click>
                     </div>
                   </div>
 

@@ -13,18 +13,40 @@ blocktoolApp.factory('VendorDevice',
 
       Devices: [],
 
+      DeviceTypes: function() {
+        var data = _.pluck(this.Devices, 'device_type');
+        data = _.without(data, "");
+        data = _.sortBy(data, function(type) { return type; });
+        data = _.uniq(data, true);
+
+        return data;
+      },
+
+      /**
+       * Gets a device_type for a given deviceId
+       * @param {[type]} deviceId [description]
+       */
+      GetTypeForDevice: function(deviceId) {
+        var device = _.find(this.Devices, function(device) {
+                      return device.did === parseInt(deviceId);
+                    });
+
+        if (device){
+          return device.device_type;
+        } else {
+          return "";
+        }
+      },
+
       Load: function() {
         $http.get('/json/vendor_devices.json').success(function(response) {
 
           var data = response.data;
-
-          data = _.pluck(data, 'device_type');
-          data = _.without(data, "");
-          data = _.sortBy(data, function(type) { return type; });
-          data = _.uniq(data, true);
-
-          // console.log("Vendor Devices", data);
+          data = _.sortBy(data, function(device) {
+            return device.device_type;
+          })
           this.Devices = data;
+
           $rootScope.$broadcast(UIEvents.VendorDevicesLoaded, this.Devices);
         }.bind(this));
       }

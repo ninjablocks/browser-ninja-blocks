@@ -12,6 +12,12 @@ blocktoolApp.controller('DeviceFactoryCtrl',
     $scope.Types = Ninja.DeviceTypes;
 
     /**
+     * Vendor Devices
+     * @type {Array}
+     */
+    $scope.Devices = [];
+
+    /**
      * Array of Blocks
      * @type {[type]}
      */
@@ -119,11 +125,21 @@ blocktoolApp.controller('DeviceFactoryCtrl',
 
     $rootScope.$on(UIEvents.VendorDevicesLoaded, function(event) {
       // $rootScope.$apply(function() {
-        $scope.Types = VendorDevice.Devices;
+        $scope.Devices = VendorDevice.Devices;
+        $scope.Devices = _.filter($scope.Devices, function(device) {
+          return device.device_type !== '';
+        });
 
         // console.log("Vendor Devices Updated", $scope.Types);
 
         $rootScope.$broadcast(UIEvents.VendorDeviceUIUpdate);
       // });
+    });
+
+    /**
+     * Dynamically update the device type on device selection
+     */
+    $scope.$watch('DeviceOptions.deviceId', function() {
+      $scope.DeviceOptions.type = VendorDevice.GetTypeForDevice($scope.DeviceOptions.deviceId);
     });
 }]);
