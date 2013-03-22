@@ -112,7 +112,7 @@
                   <div class="row">
                     <div class="small-5 columns"><label for="deviceType" class="inline right">Type:</label></div>
                     <div class="small-7 columns">
-                      <select name="deviceType" id="deviceType" class="small" ng-model="DeviceOptions.type">
+                      <select name="deviceType" id="deviceType" class="small" ng-model="DeviceOptions.type" foundation-select>
                         <option value="">- Select -</option>
                         <option ng-repeat="Type in Types" value="{{ Type }}">{{ Type }}</option>
                       </select>
@@ -250,6 +250,7 @@
         <script src="scripts/vendor/angular.js"></script>
         <script src="components/angular-underscore/angular-underscore.js"></script>
         <script src="components/angular-ui/build/angular-ui.min.js"></script>
+        <script src="components/angular-resource/angular-resource.min.js"></script>
 
 
         <script src="components/codemirror/lib/codemirror.js"></script>
@@ -299,6 +300,7 @@
         <script src="scripts/directives/selectOnClick.js"></script>
         <script src="scripts/directives/codeInputJs.js"></script>
         <script src="scripts/directives/isotopeDevices.js"></script>
+        <script src="scripts/directives/foundationSelect.js"></script>
         <!-- endbuild -->
         <script type="text/javascript">
           jQuery(document).ready(function() {

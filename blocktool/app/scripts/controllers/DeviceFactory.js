@@ -1,8 +1,8 @@
 'use strict';
 
 blocktoolApp.controller('DeviceFactoryCtrl',
-  ['$rootScope', '$scope', 'NinjaService', 'NinjaUtilities', 'BlockService', 'UIEvents', 'Underscore'
-  , function($rootScope, $scope, NinjaService, NinjaUtilities, BlockService, UIEvents, _) {
+  ['$rootScope', '$scope', 'NinjaService', 'NinjaUtilities', 'BlockService', 'UIEvents', 'Underscore', 'VendorDevice'
+  , function($rootScope, $scope, NinjaService, NinjaUtilities, BlockService, UIEvents, _, VendorDevice) {
 
 
     /**
@@ -114,5 +114,16 @@ blocktoolApp.controller('DeviceFactoryCtrl',
 
     $rootScope.$on(UIEvents.BlockSelect, function(event, block) {
       $scope.BlockNodeId = block.Options.nodeId;
+    });
+
+
+    $rootScope.$on(UIEvents.VendorDevicesLoaded, function(event) {
+      // $rootScope.$apply(function() {
+        $scope.Types = VendorDevice.Devices;
+
+        // console.log("Vendor Devices Updated", $scope.Types);
+
+        $rootScope.$broadcast(UIEvents.VendorDeviceUIUpdate);
+      // });
     });
 }]);

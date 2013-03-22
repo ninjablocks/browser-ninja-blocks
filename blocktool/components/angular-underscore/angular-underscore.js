@@ -33,16 +33,16 @@
   });
 
   // Shiv "uniq" works for iterator without "isSorted" parameter.
-  _.uniq = _.unique = function() {
-    var args = arguments;
+  // _.uniq = _.unique = function() {
+  //   var args = arguments;
 
-    if(_.isFunction(args[1])) {
-      args[2] = args[1];
-      args[1] = false;
-    }
+  //   if(_.isFunction(args[1])) {
+  //     args[2] = args[1];
+  //     args[1] = false;
+  //   }
 
-    return _.uniq.apply(_, args);
-  };
+  //   return _.uniq.apply(_, args);
+  // };
 
   // Shiv "filter", "reject" to angular's built-in,
   // and reserve underscore's feature(works on obj).

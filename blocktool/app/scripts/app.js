@@ -1,6 +1,6 @@
 'use strict';
 
-var blocktoolApp = angular.module('blocktoolApp', ['angular-underscore', 'ui'])
+var blocktoolApp = angular.module('blocktoolApp', ['angular-underscore', 'ui', 'ngResource'])
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider
       .when('/', {

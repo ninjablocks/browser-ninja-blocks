@@ -12,6 +12,9 @@ blocktoolApp.service('UIEvents', function() {
         DeviceCreated:              'DeviceCreated',
         DeviceRemoved:              'DeviceRemoved',
 
+        VendorDevicesLoaded:        'VendorDevicesLoaded',
+        VendorDeviceUIUpdate:       'VendorDeviceUIUpdate',
+
         OnActuateUpdated:           'OnActuateUpdated',
 
         ServerSwitch:               'ServerSwitch',
