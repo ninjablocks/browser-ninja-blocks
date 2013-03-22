@@ -58,14 +58,14 @@
             <div class="content server" ng-controller="ServerCtrl">
               <h5><span data-tooltip class="has-tip tip-right" title="Select the Ninja server ">0. Server</span></h5>
               <div class="row">
-                <div class="large-6 small-6 columns">
+                <div class="large-4 small-4 columns">
                   <a href="" ng-click="SelectServer('localhost')" class="button small secondary inline" ng-class="{green:IsSelected('localhost'), selected:IsSelected('localhost')}">Localhost</a>
                 </div>
-                <!-- <div class="large-4 small-4 columns">
+                <div class="large-4 small-4 columns">
                   <a href="" ng-click="SelectServer('staging')" class="button small secondary inline" ng-class="{yellow:IsSelected('staging'),
                   selected:IsSelected('staging')}">Staging</a>
-                </div> -->
-                <div class="large-6 small-6 columns">
+                </div>
+                <div class="large-4 small-4 columns">
                   <a href="" ng-click="SelectServer('production')" class="button small secondary inline" ng-class="{alert:IsSelected('production'), selected:IsSelected('production')}">Production</a>
                 </div>
               </div>
@@ -84,7 +84,9 @@
 
                     <small>Devices: {{ Block.Devices.length }}</small>
                     <br>
-                    <small>{{ Block.ServerUrl() }}</small>
+                    <small>Server: {{ Block.ServerUrl() }}</small>
+                    <br>
+                    <small>Token: <span select-on-click>{{ Block.Options.token }}</span></small>
                     <div class="remove foundicon-remove" ng-click="Remove()"></div>
                   </div>
               </div>
