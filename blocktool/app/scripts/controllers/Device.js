@@ -19,6 +19,11 @@ blocktoolApp.controller('DeviceCtrl',
      */
     $scope.Emit = function() {
       var emitData = $scope.Device.Options.value;
+
+      if ($scope.EmitMode === $scope.EMITMODES.JSON) {
+        emitData = JSON.parse(emitData);
+      }
+      
       $scope.Device.Emit(emitData);
     };
 

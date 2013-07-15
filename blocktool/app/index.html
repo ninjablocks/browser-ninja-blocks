@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-        <title>Browser Block Tool | Ninja Blocks</title>
+        <title>Browser Block Simulator | Ninja Blocks</title>
         <meta name="description" content=""/>
         <meta name="viewport" content="width=device-width"/>
 
@@ -34,7 +34,7 @@
             <ul class="title-area">
               <li class="name">
                 <h1>
-                  <a href="">Browser Block Tool</a>
+                  <a href="">Ninja Blocks Block Simulator</a>
                 </h1>
               </li>
               <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
@@ -78,9 +78,11 @@
                   <div class="block" ng-repeat="Block in Blocks" ng-controller="BlockCtrl" ng-click="SelectBlock(Block)" ng-class="{selected:IsSelected()}">
                     <h5 class="nodeId" select-on-click>{{ Block.Options.nodeId }} </h5>
                     <span class="paired label lightgreen radius" ui-if="IsActivated()">Paired</span>
-                    <a class="button tiny radius alert" ng-click="Activate()" ui-if="!IsActivated()">Activate</a>
+                    <a class="button tiny radius alert" ng-click="Activate()" ui-if="!IsActivated() && !IsActivating">Activate</a>
+                    <span class="tiny radius" ui-if="IsActivating">Activating....</span>
                     <a class="button tiny radius orange" ng-click="Listen()" ui-if="IsActivated() && !IsListening()">Listen</a>
                     <a class="button tiny radius alert" ng-click="StopListening()" ui-if="IsActivated() && IsListening()">Stop Listening</a>
+                    <a ng-tap="Deactivate()" class="button tiny radius alert" ui-if="IsActivated()">Deactivate</a>
 
                     <small>Devices: {{ Block.Devices.length }}</small>
                     <br>

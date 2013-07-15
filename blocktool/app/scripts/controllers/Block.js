@@ -5,6 +5,8 @@ blocktoolApp.controller('BlockCtrl'
   , function($rootScope, $scope, console, UIEvents, BlockService) {
 
 
+
+
   /**
    * Is this block selected in the UI
    */
@@ -44,11 +46,15 @@ blocktoolApp.controller('BlockCtrl'
     return ($scope.Block.Options.token !== null && $scope.Block.Options.token !== undefined && $scope.Block.Options.token !== "");
   };
 
+  $scope.IsActivating = false;
+
   /**
    * Instigate Block Activation
    */
   $scope.Activate = function() {
     console.log('[Block]: Activating', $scope.Block.Options.nodeId);
+
+    $scope.IsActivating = true;
 
     $scope.Block.Activate(function(token) {
       if (!$rootScope.$$phase) {
@@ -60,6 +66,12 @@ blocktoolApp.controller('BlockCtrl'
 
     });
   };
+
+
+  $scope.Deactivate = function() {
+    $scope.Block.Options.token = null;
+    $scope.IsActivating = false;
+  }
 
   /**
    * Removes the block
