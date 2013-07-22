@@ -1,0 +1,12 @@
+{
+  "name": "browser-ninja-blocks",
+  "version": "0.1.0",
+  "main": "./lib/ninja.js",
+  "dependencies": {},
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "blocktool"
+  ]
+}
