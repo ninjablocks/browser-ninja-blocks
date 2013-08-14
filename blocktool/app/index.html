@@ -82,7 +82,7 @@
                     <span class="tiny radius" ui-if="IsActivating">Activating....</span>
                     <a class="button tiny radius orange" ng-click="Listen()" ui-if="IsActivated() && !IsListening()">Listen</a>
                     <a class="button tiny radius alert" ng-click="StopListening()" ui-if="IsActivated() && IsListening()">Stop Listening</a>
-                    <a ng-tap="Deactivate()" class="button tiny radius alert" ui-if="IsActivated()">Deactivate</a>
+                    <a ng-click="Deactivate()" class="button tiny radius alert" ui-if="IsActivated()">Deactivate</a>
 
                     <small>Devices: {{ Block.Devices.length }}</small>
                     <br>

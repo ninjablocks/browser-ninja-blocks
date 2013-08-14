@@ -57,12 +57,14 @@ blocktoolApp.controller('BlockCtrl'
     $scope.IsActivating = true;
 
     $scope.Block.Activate(function(token) {
-      if (!$rootScope.$$phase) {
-        $rootScope.$apply();
-      }
 
       console.log('[Block]: Activated', $scope.Block.Options.nodeId);
       $rootScope.$broadcast(UIEvents.BlockActivated, $scope.Block);
+      $scope.IsActivating = false;
+
+      if (!$rootScope.$$phase) {
+        $rootScope.$apply();
+      }
 
     });
   };
@@ -71,6 +73,9 @@ blocktoolApp.controller('BlockCtrl'
   $scope.Deactivate = function() {
     $scope.Block.Options.token = null;
     $scope.IsActivating = false;
+    if (!$rootScope.$$phase) {
+      $rootScope.$apply($scope.IsActivated);
+    }
   }
 
   /**
