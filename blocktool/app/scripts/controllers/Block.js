@@ -1,8 +1,8 @@
 'use strict';
 
 blocktoolApp.controller('BlockCtrl'
-  , ['$rootScope', '$scope', 'Console', 'UIEvents', 'BlockService'
-  , function($rootScope, $scope, console, UIEvents, BlockService) {
+  , ['$rootScope', '$scope', 'Console', 'UIEvents', 'BlockService', '$window'
+  , function($rootScope, $scope, console, UIEvents, BlockService, $window) {
 
 
 
@@ -58,14 +58,21 @@ blocktoolApp.controller('BlockCtrl'
 
     $scope.Block.Activate(function(token) {
 
+      $scope.IsActivating = false;
       console.log('[Block]: Activated', $scope.Block.Options.nodeId);
       $rootScope.$broadcast(UIEvents.BlockActivated, $scope.Block);
-      $scope.IsActivating = false;
 
       if (!$rootScope.$$phase) {
         $rootScope.$apply();
       }
 
+    }, function() {
+      $scope.IsActivating = false;
+      $window.alert("Could not pair block. Pairing must be performed within 30 seconds");
+
+      if (!$rootScope.$$phase) {
+        $rootScope.$apply();
+      }
     });
   };
 
