@@ -482,21 +482,28 @@ var Ninja = function(options) {
      * Initiates a blocks activation
      * @param {function} callback Callback function to run when complete. Called with the block token as the 1st argument
      */
-    this.Activate = function(callback) {
+    this.Activate = function(successCallback, errorCallback) {
       var postData = { nodeid: this.Options.nodeId };
       var postUrl = this.ServerUrl() + '/block/' + this.Options.nodeId + '/activate';
 
       var activateListener;
 
       var activateXHR = Ninja.Utilities.CreateXHR(function(error, response) {
-        this.Options.token = response.token;
-        if (callback) {
-          callback(response.token);
+        if (!error) {
+          this.Options.token = response.token;
+          if (successCallback) {
+            successCallback(response.token);
+          }
+        } else {
+          if (errorCallback) {
+            errorCallback();
+          }
         }
-        //this.ConfirmActivation(callback);
+        
 
       }, this);
       activateXHR.open('GET', postUrl, true);
+      activateXHR.timeout = 31000; // must be set after the open()
       activateXHR.setRequestHeader('Accept', 'application/json');
       activateXHR.send();
 
@@ -589,8 +596,12 @@ var Ninja = function(options) {
           if (command !== '') {
             var commandObject = JSON.parse(command);
 
-            // TODO: Send it off the devices
-            this.BroadcastCommand(commandObject);
+            if (commandObject.hasOwnProperty("result") && commandObject.hasOwnProperty("id") && !commandObject.result && commandObject.id === 401) {
+              this.Stop()
+            } else {
+              // TODO: Send it off the devices
+              this.BroadcastCommand(commandObject);
+            }
           }
         }
 
@@ -1843,6 +1854,17 @@ Ninja.Utilities = {
 
       if (callback && callbackScope) callback.call(callbackScope, error);
         else if (callback) callback(error);
+    };
+
+    xhr.ontimeout = function(event) {
+      var timeout = new Error();
+      timeout.result = -1;
+      timeout.event = event;
+      timeout.name = "Timeout";
+      timeout.message = "Request timed out";
+
+      if (callback && callbackScope) callback.call(callbackScope, timeout);
+      else if (callback) callback(timeout);
     };
 
     xhr.onreadystatechange = function(event) {
