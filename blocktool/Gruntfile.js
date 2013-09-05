@@ -163,6 +163,8 @@ module.exports = function( grunt ) {
       // no minification, is done by the min task
       optimize: 'none',
       baseUrl: './scripts',
+      out: 'scripts.js',
+      name: 'main',
       wrap: true
     }
   });
